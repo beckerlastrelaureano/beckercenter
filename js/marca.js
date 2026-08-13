@@ -33,9 +33,9 @@ const MARCA = {
   // Paleta. colorAcentoRgb tiene que ser el MISMO color que colorAcento,
   // pero escrito como "R, G, B" (sin rgb(), sin #) para poder armar
   // versiones transparentes del color en el CSS.
-  colorAcento: '#C026D3',
-  colorAcentoClaro: '#E879F9',
-  colorAcentoRgb: '192, 38, 211',
+  colorAcento: '#0EA5E9',
+  colorAcentoClaro: '#38BDF8',
+  colorAcentoRgb: '14, 165, 233',
 };
 
 // -----------------------------------------------------------------------

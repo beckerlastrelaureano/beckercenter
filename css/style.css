@@ -23,9 +23,9 @@
   --color-texto-suave: #93A0A8;
   --color-texto-tenue: #5C6870;
 
-  --color-acento: #C026D3;
-  --color-acento-claro: #E879F9;
-  --color-acento-rgb: 192, 38, 211;
+  --color-acento: #0EA5E9;
+  --color-acento-claro: #38BDF8;
+  --color-acento-rgb: 14, 165, 233;
   --color-acento-suave: rgba(var(--color-acento-rgb), 0.18);
   --color-exito: #3FA372;
   --color-exito-suave: rgba(63, 163, 114, 0.16);
