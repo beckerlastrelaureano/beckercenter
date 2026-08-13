@@ -12,10 +12,11 @@ service cloud.firestore {
     // ------------------------------------------------------------------
 
     // El superadmin (Becker) se identifica por email fijo, igual que en
-    // js/firebase-config.js. No depende de leer ningún documento.
+    // js/firebase-config.js. ".lower()" para que no importen mayúsculas
+    // (el teclado del celular a veces autocapitaliza la primera letra).
     function esSuperadmin() {
       return request.auth != null &&
-             request.auth.token.email == 'beckerlastrelaureano@gmail.com';
+             request.auth.token.email.lower() == 'beckerlastrelaureano@gmail.com';
     }
 
     function estoyAutenticado() {

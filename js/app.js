@@ -1,5 +1,5 @@
 /**
- * app.js — Tomicoach
+ * app.js — Becker Center
  * -----------------------------------------------------------------------
  * Controlador principal. Reutiliza la misma base de 353 ejercicios y el
  * mismo criterio de diseño de Becker App, pero con login real (Firebase)
@@ -234,11 +234,17 @@ const App = (() => {
       <div id="lista-codigos"><p class="texto-suave">Cargando...</p></div>
     `;
 
-    $('#btn-nuevo-codigo').addEventListener('click', async () => {
-      const nombreNegocio = prompt('¿Nombre del entrenador o del negocio? (solo para identificarlo en tu lista)') || '';
-      const codigo = await FirebaseService.crearCodigoInvitacion(nombreNegocio.trim());
-      toast(`Código generado: ${codigo}`, 'exito', 6000);
-      renderSuperadmin();
+    $('#btn-nuevo-codigo').addEventListener('click', async (e) => {
+      const btn = e.currentTarget;
+      if (btn.disabled) return;
+      btn.disabled = true;
+      try {
+        const nombreNegocio = prompt('¿Nombre del entrenador o del negocio? (solo para identificarlo en tu lista)') || '';
+        const codigo = await FirebaseService.crearCodigoInvitacion(nombreNegocio.trim());
+        toast(`Código generado: ${codigo}`, 'exito', 6000);
+      } finally {
+        renderSuperadmin();
+      }
     });
 
     const [entrenadores, codigos] = await Promise.all([
@@ -632,13 +638,16 @@ const App = (() => {
       $('#form-registro').hidden = tab.dataset.tab !== 'registro';
     }));
 
-    $('#registro-email')?.addEventListener('input', () => {
+    const chequearEmailSuperadmin = () => {
       const esSuperadmin = $('#registro-email').value.trim().toLowerCase() === EMAIL_SUPERADMIN.toLowerCase();
       const campoCodigo = $('#campo-codigo');
       if (campoCodigo) {
         campoCodigo.hidden = esSuperadmin;
         $('#registro-codigo').required = !esSuperadmin;
       }
+    };
+    ['input', 'change', 'keyup', 'blur'].forEach(ev => {
+      $('#registro-email')?.addEventListener(ev, chequearEmailSuperadmin);
     });
 
     $('#form-login').addEventListener('submit', async (e) => {
@@ -687,6 +696,7 @@ const App = (() => {
     if (c.includes('weak-password')) return 'La contraseña necesita al menos 6 caracteres.';
     if (c.includes('user-not-found') || c.includes('wrong-password') || c.includes('invalid-credential')) return 'Email o contraseña incorrectos.';
     if (c.includes('too-many-requests')) return 'Demasiados intentos. Probá de nuevo en un rato.';
+    if (c.includes('permission-denied')) return 'No se pudo crear la cuenta por un problema de permisos. Avisale a Becker.';
     if (!c && ex.message) return ex.message;
     return 'Ocurrió un error. Probá de nuevo.';
   }
@@ -722,6 +732,7 @@ const App = (() => {
     FirebaseService.onCambioSesion((usuario) => {
       ocultarSplash();
       if (!usuario) {
+        ultimoUidRenderizado = null;
         $('#pantalla-auth').hidden = false;
         $('#app').hidden = true;
         return;
@@ -729,6 +740,8 @@ const App = (() => {
       entrarConUsuario(usuario);
     });
   }
+
+  let ultimoUidRenderizado = null;
 
   async function mostrarPantallaSuspendido() {
     $('#pantalla-auth').hidden = true;
@@ -747,6 +760,14 @@ const App = (() => {
       const estado = await FirebaseService.getEstadoEntrenador(usuario.entrenadorId);
       if (estado === 'suspendido') { mostrarPantallaSuspendido(); return; }
     }
+
+    // Evita re-renderizar todo si ya se está mostrando la sesión de este
+    // mismo usuario: esta función se puede disparar dos veces casi al mismo
+    // tiempo (una desde el formulario de login/registro, otra desde el
+    // aviso de sesión de Firebase), y sin este chequeo eso duplicaba
+    // botones y sus acciones (ej. "Generar código" creaba dos códigos).
+    if (ultimoUidRenderizado === usuario.uid && !$('#app').hidden) return;
+    ultimoUidRenderizado = usuario.uid;
 
     $('#pantalla-suspendido').hidden = true;
     $('#pantalla-auth').hidden = true;

@@ -8,8 +8,8 @@
  * que los datos de alumnos, rutinas y entrenamientos siempre estén al día.
  */
 
-const CACHE_VERSION = 'v2';
-const CACHE_SHELL = `tomicoach-shell-${CACHE_VERSION}`;
+const CACHE_VERSION = 'v3';
+const CACHE_SHELL = `beckercenter-shell-${CACHE_VERSION}`;
 
 const APP_SHELL = [
   './',

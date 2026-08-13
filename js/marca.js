@@ -19,23 +19,23 @@
 
 const MARCA = {
   // Nombre partido en dos: la primera parte va en color normal, la
-  // segunda en negrita con el color de acento. Ej: "Tomi" + "Coach".
-  nombre: 'Tomi',
-  sufijo: 'Coach',
+  // segunda en negrita con el color de acento. Ej: "Becker" + "Center".
+  nombre: 'Becker',
+  sufijo: 'Center',
 
   // Usado en el <title> de la pestaña, meta description y manifest.
-  nombreCompleto: 'Tomicoach',
-  descripcion: 'Gestioná a tus alumnos, asignales rutinas y seguí su progreso y asistencia.',
+  nombreCompleto: 'Becker Center',
+  descripcion: 'Panel de administración: entrenadores, códigos de invitación y suspensiones.',
 
   // Frase corta de la pantalla de carga (splash).
-  tagline: 'GESTIONÁ. ENTRENÁ. HACÉ CRECER.',
+  tagline: 'PANEL DE ADMINISTRACIÓN',
 
   // Paleta. colorAcentoRgb tiene que ser el MISMO color que colorAcento,
   // pero escrito como "R, G, B" (sin rgb(), sin #) para poder armar
   // versiones transparentes del color en el CSS.
-  colorAcento: '#0EA5E9',
-  colorAcentoClaro: '#38BDF8',
-  colorAcentoRgb: '14, 165, 233',
+  colorAcento: '#0F5D75',
+  colorAcentoClaro: '#1B87A8',
+  colorAcentoRgb: '15, 93, 117',
 };
 
 // -----------------------------------------------------------------------
