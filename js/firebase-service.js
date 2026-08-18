@@ -141,8 +141,46 @@ const FirebaseService = (() => {
   async function iniciarSesion(email, password) {
     const cred = await auth.signInWithEmailAndPassword(email, password);
     const doc = await db.collection('usuarios').doc(cred.user.uid).get();
+    if (!doc.exists) {
+      // La cuenta de Firebase existe pero su ficha fue borrada por el
+      // entrenador (o el superadmin): la cerramos de nuevo y avisamos.
+      await auth.signOut();
+      const err = new Error('CUENTA_ELIMINADA');
+      err.code = 'app/cuenta-eliminada';
+      throw err;
+    }
     usuarioActual = { uid: cred.user.uid, ...doc.data() };
     return usuarioActual;
+  }
+
+  // Se usa después de detectar CUENTA_ELIMINADA: vuelve a autenticar con el
+  // mismo email/contraseña (la cuenta de Firebase Auth sigue existiendo,
+  // solo se borró la ficha) y crea una ficha nueva con un código nuevo,
+  // sin tener que dar de alta una cuenta de Firebase distinta.
+  async function completarRegistroTrasEliminacion({ email, password, nombre, codigo }) {
+    const cred = await auth.signInWithEmailAndPassword(email, password);
+    const resuelto = await resolverCodigo(codigo);
+    if (resuelto.tipo === 'invalido') { await auth.signOut(); throw new Error(resuelto.motivo); }
+
+    const datos = resuelto.tipo === 'entrenador-nuevo'
+      ? { rol: 'entrenador', nombre, email, nombreNegocio: resuelto.nombreNegocio || nombre, estadoPago: 'activo', fechaAlta: new Date().toISOString() }
+      : { rol: 'alumno', nombre, email, entrenadorId: resuelto.entrenadorUid, objetivo: null, nivel: null, fechaAlta: new Date().toISOString() };
+
+    await db.collection('usuarios').doc(cred.user.uid).set(datos);
+    if (resuelto.tipo === 'entrenador-nuevo') await db.collection('codigosInvitacion').doc(resuelto.codigo).update({ usado: true });
+
+    usuarioActual = { uid: cred.user.uid, ...datos };
+    return usuarioActual;
+  }
+
+  // El entrenador elimina PERMANENTEMENTE a un alumno: se borra su ficha y
+  // su rutina. Ojo: la cuenta de Firebase Auth del alumno sigue existiendo
+  // (no se puede borrar desde el navegador del entrenador); por eso, si
+  // ese alumno intenta loguearse de nuevo, iniciarSesion() lo va a detectar
+  // como CUENTA_ELIMINADA y le va a pedir completar el registro de nuevo.
+  async function eliminarAlumno(alumnoUid) {
+    await db.collection('rutinas').doc(alumnoUid).delete().catch(() => {});
+    await db.collection('usuarios').doc(alumnoUid).delete();
   }
 
   function cerrarSesion() {
@@ -234,6 +272,29 @@ const FirebaseService = (() => {
     return rutina;
   }
 
+  async function eliminarRutina(alumnoUid) {
+    await db.collection('rutinas').doc(alumnoUid).delete();
+  }
+
+  async function cambiarEstadoAlumno(alumnoUid, estadoPago) {
+    await db.collection('usuarios').doc(alumnoUid).update({ estadoPago });
+  }
+
+  async function cambiarAutoeditar(alumnoUid, valor) {
+    await db.collection('usuarios').doc(alumnoUid).update({ autoeditar: !!valor });
+  }
+
+  // Solo superadmin: ver los alumnos de CUALQUIER entrenador. Útil para dar
+  // soporte, y para el caso de Becker App donde el propio Becker es el
+  // entrenador y quiere gestionar todo desde Becker Center.
+  async function listarAlumnosDeEntrenador(entrenadorUid) {
+    const snap = await db.collection('usuarios')
+      .where('rol', '==', 'alumno')
+      .where('entrenadorId', '==', entrenadorUid)
+      .get();
+    return snap.docs.map(d => ({ uid: d.id, ...d.data() }));
+  }
+
   // ---------------------------------------------------------------------
   // Entrenamientos (historial append-only)
   // ---------------------------------------------------------------------
@@ -246,20 +307,65 @@ const FirebaseService = (() => {
   }
 
   async function getHistorial(alumnoUid) {
-    const snap = await db.collection('entrenamientos')
-      .where('alumnoUid', '==', alumnoUid)
-      .orderBy('fecha', 'asc')
-      .get();
+    let query = db.collection('entrenamientos').where('alumnoUid', '==', alumnoUid);
+    // Si quien pregunta es el entrenador (no el propio alumno), la regla de
+    // seguridad necesita que la consulta también filtre por entrenadorId,
+    // para poder verificarla sin tener que leer todos los entrenamientos.
+    if (usuarioActual && usuarioActual.rol === 'entrenador') {
+      query = query.where('entrenadorId', '==', usuarioActual.uid);
+    }
+    // Sin orderBy a propósito: combinar un "where" con "orderBy" en un campo
+    // distinto exige crear un índice compuesto en la consola de Firebase.
+    // Como igual ordenamos en el código donde se muestra, lo evitamos.
+    const snap = await query.get();
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  }
+
+  // ---------------------------------------------------------------------
+  // Pagos: entrenador→superadmin (cuota de la plataforma) y
+  // alumno→entrenador (cuota de entrenamiento). estadoCuota es un concepto
+  // distinto de estadoPago (que es la suspensión de la cuenta).
+  // ---------------------------------------------------------------------
+  async function registrarPago(uidPagador, rolPagador, entrenadorId, monto) {
+    const fecha = new Date().toISOString();
+    await db.collection('pagos').add({ uidPagador, rolPagador, entrenadorId: entrenadorId || null, monto: Number(monto) || 0, fecha });
+    await db.collection('usuarios').doc(uidPagador).update({ estadoCuota: 'al_dia', ultimoPagoFecha: fecha, ultimoPagoMonto: Number(monto) || 0 });
+  }
+
+  async function marcarCuotaVencida(uid) {
+    await db.collection('usuarios').doc(uid).update({ estadoCuota: 'vencido' });
+  }
+
+  // Pagos de los alumnos de ESTE entrenador (o de un alumno puntual).
+  async function getPagosDeAlumnos(alumnoUid) {
+    let query = db.collection('pagos').where('entrenadorId', '==', usuarioActual.uid);
+    if (alumnoUid) query = query.where('uidPagador', '==', alumnoUid);
+    const snap = await query.get();
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  }
+
+  // Solo superadmin: todos los pagos de entrenadores, para el resumen mensual.
+  async function getPagosDeEntrenadores() {
+    const snap = await db.collection('pagos').where('rolPagador', '==', 'entrenador').get();
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  }
+
+  async function eliminarCodigoInvitacion(codigo) {
+    await db.collection('codigosInvitacion').doc(codigo).delete();
+  }
+
+  async function eliminarPago(id) {
+    await db.collection('pagos').doc(id).delete();
   }
 
   return {
     init, configurado,
     resolverCodigo,
-    onCambioSesion, registrarUsuario, iniciarSesion, cerrarSesion, recuperarContrasena, getUsuarioActual,
-    listarEntrenadores, crearCodigoInvitacion, listarCodigosInvitacion, cambiarEstadoPagoEntrenador,
-    listarAlumnos, actualizarFichaAlumno, getEstadoEntrenador,
-    getRutina, guardarRutina,
-    agregarEntrenamiento, getHistorial
+    onCambioSesion, registrarUsuario, iniciarSesion, cerrarSesion, recuperarContrasena, getUsuarioActual, completarRegistroTrasEliminacion,
+    listarEntrenadores, crearCodigoInvitacion, listarCodigosInvitacion, cambiarEstadoPagoEntrenador, eliminarCodigoInvitacion,
+    listarAlumnos, actualizarFichaAlumno, getEstadoEntrenador, cambiarEstadoAlumno, eliminarAlumno, cambiarAutoeditar, listarAlumnosDeEntrenador,
+    getRutina, guardarRutina, eliminarRutina,
+    agregarEntrenamiento, getHistorial,
+    registrarPago, marcarCuotaVencida, getPagosDeAlumnos, getPagosDeEntrenadores, eliminarPago
   };
 })();
