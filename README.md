@@ -18,7 +18,7 @@ La guía para editar los archivos de datos está en `data/LEEME.md`.
 
 ## Al cambiar estilos o código
 
-Las páginas cargan `css/styles.css?v=4` y `js/...js?v=4`. Si cambiás algún archivo de `css/` o `js/`, subí ese número en las 4 páginas (`?v=5`, `?v=6`…). Así los visitantes reciben la versión nueva al instante, en lugar de una copia guardada.
+Las páginas cargan `css/styles.css?v=5` y `js/...js?v=N`. Si cambiás algún archivo de `css/` o `js/`, subí el número de ese archivo en todas las páginas que lo usan (por ejemplo de `?v=5` a `?v=6`). Así los visitantes reciben la versión nueva al instante, en lugar de una copia guardada.
 
 ## Estructura
 

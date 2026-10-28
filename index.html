@@ -24,6 +24,19 @@
 
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 
+  <!-- Detecta si el celular aguanta 3D (va primero) -->
+  <script src="js/core/rendimiento.js?v=5"></script>
+
+  <!-- Dirección de Three.js (librería 3D) en el CDN -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+    }
+  }
+  </script>
+
   <!-- Aplica el tema guardado antes de pintar (evita un parpadeo) -->
   <script>try{var t=localStorage.getItem('bc-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 
@@ -32,7 +45,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Montserrat:wght@300;400;500;600;700&display=swap">
 
-  <link rel="stylesheet" href="css/styles.css?v=4">
+  <link rel="stylesheet" href="css/styles.css?v=5">
 
   <!-- Datos para Google: quién sos -->
   <script type="application/ld+json">
@@ -79,7 +92,9 @@
 
     <!-- ================= HERO (lo primero que se ve) ================= -->
     <section class="hero">
-      <!-- Fondo líquido que sigue el dedo (js/fx.js) -->
+      <!-- Monograma 3D (js/3d/hero-logo.js). En celulares lentos no se usa. -->
+      <canvas class="hero-3d" aria-hidden="true"></canvas>
+      <!-- Fondo líquido: solo en celulares lentos, en lugar del 3D (js/fx.js) -->
       <canvas class="fx-canvas fx-liquid" data-fx="liquid" aria-hidden="true"></canvas>
       <div class="hero-inner">
         <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><circle class="ring" cx="50" cy="50" r="46"/><path class="ib" d="M34 30V70M42 33H55a8 8 0 0 1 0 16H44M44 49H57a9 9 0 0 1 0 18H42"/></svg>
@@ -104,6 +119,12 @@
           </a>
           <a class="btn" data-magnet href="#caminos">Explorar</a>
         </div>
+
+        <!-- Solo aparece en iPhone: pide permiso para mover el logo inclinando el celular -->
+        <button class="gyro-btn" type="button" data-gyro hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M3 9a9 9 0 0 0 0 6M21 9a9 9 0 0 1 0 6"/></svg>
+          Activar movimiento
+        </button>
       </div>
       <span class="scroll-cue" aria-hidden="true"></span>
     </section>
@@ -312,8 +333,16 @@
   </a>
 
   <!-- Scripts: primero tu configuración, después el funcionamiento -->
+  <!-- Librerías desde el CDN: GSAP (animaciones de scroll) y Lenis (scroll suave) -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+
+  <!-- Scripts del sitio: primero tu configuración, después el funcionamiento -->
   <script src="js/config.js?v=4"></script>
   <script src="js/main.js?v=4"></script>
   <script src="js/fx.js?v=4"></script>
+  <script src="js/core/scroll.js?v=5"></script>
+  <script src="js/home.js?v=5"></script>
 </body>
 </html>
