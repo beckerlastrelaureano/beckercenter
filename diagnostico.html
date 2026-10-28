@@ -37,7 +37,8 @@
       let webgl = false;
       try { const c = document.createElement('canvas'); webgl = !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) {}
       let sw = 0;
-      try { sw = (await navigator.serviceWorker.getRegistrations()).length; } catch (e) {}
+      // Solo cuenta copias de este sitio (no las de otras apps como gymtracker)
+      try { sw = (await navigator.serviceWorker.getRegistrations()).filter(r => r.scope.includes('/beckercenter/')).length; } catch (e) {}
       let version = '?';
       try {
         const html = await (await fetch('index.html?nocache=' + Date.now(), { cache: 'no-store' })).text();
