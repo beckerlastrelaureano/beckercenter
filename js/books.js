@@ -40,6 +40,12 @@
     if (n <= 0) delete pedido[id]; else pedido[id] = n;
     guardarPedido();
     actualizarPedido();
+    // Pequeño salto del botón del pedido al agregar un libro
+    if (delta > 0) {
+      document.querySelectorAll('.cart-btn, [data-cart-bar]').forEach(el => {
+        el.classList.remove('is-bump'); void el.offsetWidth; el.classList.add('is-bump');
+      });
+    }
     // Actualiza solo la tarjeta tocada, sin redibujar todo
     const card = grid.querySelector(`[data-id="${id}"] .book-buy`);
     if (card) card.innerHTML = botonCompra(id);
@@ -131,7 +137,8 @@
       ? '<span class="badge is-stock">En stock</span>'
       : '<span class="badge">Por encargo</span>';
     return `
-      <article class="card book" data-id="${l.id}" style="--i:${i % POR_PAGINA}">
+      <article class="card book tilt" data-tilt="6" data-id="${l.id}" style="--i:${i % POR_PAGINA}">
+        <span class="glare" aria-hidden="true"></span>
         <div class="book-cover">${portada}</div>
         <div class="book-body">
           <div class="book-tags">${estado}${l.tapaDura ? '<span class="badge is-soft">Tapa dura</span>' : ''}</div>
@@ -169,6 +176,7 @@
   function dibujar() {
     const lista = filtrados();
     grid.innerHTML = lista.slice(0, state.visibles).map(tarjeta).join('');
+    if (window.FX) window.FX.activar(grid);   // inclinación 3D (js/fx.js)
     countEl.textContent = lista.length === 1 ? '1 libro' : lista.length + ' libros';
     emptyEl.hidden = lista.length > 0;
     moreBtn.hidden = lista.length <= state.visibles;
@@ -190,6 +198,7 @@
     state.visibles += POR_PAGINA;
     const lista = filtrados();
     grid.insertAdjacentHTML('beforeend', lista.slice(antes, state.visibles).map(tarjeta).join(''));
+    if (window.FX) window.FX.activar(grid);
     moreBtn.hidden = lista.length <= state.visibles;
   });
 

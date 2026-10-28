@@ -270,9 +270,17 @@
   }
 
   /* ---------- Arranque ---------- */
-  document.querySelectorAll('canvas[data-fx="liquid"]').forEach(liquido);
-  document.querySelectorAll('canvas[data-fx="lightfall"]').forEach(lluvia);
-  document.querySelectorAll('[data-split]').forEach(dividir);
-  if (!reducir) document.querySelectorAll('[data-tilt]').forEach(inclinar);
-  if (!reducir && !tactil) document.querySelectorAll('[data-magnet]').forEach(iman);
+  // "activar" busca efectos dentro de un elemento. Se exporta como
+  // window.FX.activar para los contenidos que se crean después
+  // (tarjetas de Books y Design).
+  function activar(raiz) {
+    const r = raiz || document;
+    r.querySelectorAll('canvas[data-fx="liquid"]:not([data-fx-on])').forEach(c => { c.setAttribute('data-fx-on', ''); liquido(c); });
+    r.querySelectorAll('canvas[data-fx="lightfall"]:not([data-fx-on])').forEach(c => { c.setAttribute('data-fx-on', ''); lluvia(c); });
+    r.querySelectorAll('[data-split]:not(.is-split)').forEach(dividir);
+    if (!reducir) r.querySelectorAll('[data-tilt]:not([data-fx-on])').forEach(el => { el.setAttribute('data-fx-on', ''); inclinar(el); });
+    if (!reducir && !tactil) r.querySelectorAll('[data-magnet]:not([data-fx-on])').forEach(el => { el.setAttribute('data-fx-on', ''); iman(el); });
+  }
+  activar();
+  window.FX = { activar };
 })();

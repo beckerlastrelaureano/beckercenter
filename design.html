@@ -63,6 +63,8 @@
 
     <!-- ================= PORTADA DE DESIGN ================= -->
     <section class="page-hero">
+      <!-- Fondo líquido que sigue el dedo (js/fx.js) -->
+      <canvas class="fx-canvas fx-liquid" data-fx="liquid" aria-hidden="true"></canvas>
       <div class="wrap">
         <svg class="page-hero-icon" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="9" width="52" height="36" rx="5"/><path class="accent" d="M22 56h20M32 45v11"/><path class="accent" d="M24 21l-6 6 6 6M40 21l6 6-6 6"/></svg>
         <h1 class="page-title">
@@ -70,7 +72,7 @@
           <span class="subline"><span>Design</span></span>
         </h1>
         <!-- TEXTO EDITABLE -->
-        <p class="hero-slogan">Herramientas digitales para <span>entrenar mejor.</span></p>
+        <p class="hero-slogan">Herramientas digitales para <span class="shiny">entrenar mejor.</span></p>
         <p class="hero-intro">Diseño apps que uso con mis alumnos: simples, rápidas y pensadas para el celular. Probalas gratis o pedime la tuya.</p>
       </div>
     </section>
@@ -98,10 +100,11 @@
 
 
     <!-- ================= PROYECTO A MEDIDA ================= -->
-    <section class="section closing">
+    <section class="gx-closing">
+      <canvas class="fx-canvas" data-fx="lightfall" aria-hidden="true"></canvas>
       <div class="wrap" data-reveal>
         <p class="eyebrow">A medida</p>
-        <h2 class="h2">¿Querés <em>tu propia app?</em></h2>
+        <h2 class="gx-closing-title">¿Querés <span class="shiny">tu propia app?</span></h2>
         <!-- TEXTO EDITABLE -->
         <p class="lead">Si sos entrenador o tenés un gimnasio, puedo diseñar una app con tu marca para tus alumnos.</p>
         <ul class="check-list">
@@ -110,7 +113,7 @@
           <li>Sin costos de servidor</li>
         </ul>
         <div class="hero-cta">
-          <a class="btn btn-primary" data-wa="Hola Becker, me interesa una app a medida para mi gimnasio o mis alumnos.">
+          <a class="btn btn-primary btn-glow" data-magnet data-wa="Hola Becker, me interesa una app a medida para mi gimnasio o mis alumnos.">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
             Pedir presupuesto
           </a>
@@ -168,6 +171,7 @@
 
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/fx.js"></script>
   <script src="js/design.js"></script>
 </body>
 </html>

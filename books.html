@@ -69,6 +69,8 @@
 
     <!-- ================= PORTADA DE BOOKS ================= -->
     <section class="page-hero">
+      <!-- Fondo líquido que sigue el dedo (js/fx.js) -->
+      <canvas class="fx-canvas fx-liquid" data-fx="liquid" aria-hidden="true"></canvas>
       <div class="wrap">
         <svg class="page-hero-icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M6 14c7-3 15-3 26 3v36c-11-6-19-6-26-3z"/><path class="accent" d="M32 17c11-6 19-6 26-3v36c-7-3-15-3-26 3"/></svg>
         <h1 class="page-title">
@@ -76,7 +78,7 @@
           <span class="subline"><span>Books</span></span>
         </h1>
         <!-- TEXTO EDITABLE -->
-        <p class="hero-slogan">Encontrá nuevas formas de <span>mirar la vida.</span></p>
+        <p class="hero-slogan">Encontrá nuevas formas de <span class="shiny">mirar la vida.</span></p>
         <p class="hero-intro">Libros físicos elegidos para entrenar también la cabeza. Elegí los que te interesan, armá tu pedido y lo coordinamos por WhatsApp.</p>
       </div>
     </section>
@@ -88,6 +90,19 @@
       <div><b>02</b><span>Armá tu pedido</span></div>
       <div><b>03</b><span>Coordinamos por WhatsApp</span></div>
     </section>
+
+
+    <!-- ================= CINTAS GIGANTES ================= -->
+    <div class="mega-marquee mm-books" aria-hidden="true">
+      <div class="mm-row"><div class="mm-track">
+        <span>Desarrollo personal</span><span class="outline">Finanzas</span><span>Psicología</span><span class="outline">Estoicismo</span>
+        <span>Desarrollo personal</span><span class="outline">Finanzas</span><span>Psicología</span><span class="outline">Estoicismo</span>
+      </div></div>
+      <div class="mm-row is-reverse"><div class="mm-track">
+        <span class="outline">Novelas</span><span>Fantasía</span><span class="outline">Thriller</span><span>Literatura</span>
+        <span class="outline">Novelas</span><span>Fantasía</span><span class="outline">Thriller</span><span>Literatura</span>
+      </div></div>
+    </div>
 
 
     <!-- ================= CATÁLOGO ================= -->
@@ -202,6 +217,7 @@
 
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/fx.js"></script>
   <script src="js/books.js"></script>
 </body>
 </html>

@@ -22,9 +22,10 @@
   function celular(app) {
     if (!app.capturas.length) return '';
     return `
-      <div class="phone" data-phone>
+      <div class="phone tilt" data-phone data-tilt="14">
         <div class="phone-screen">
           ${app.capturas.map((src, i) => `<img src="${esc(src)}" alt="Captura de ${esc(app.nombre)} ${i + 1}" ${i ? 'loading="lazy"' : ''} class="${i ? '' : 'is-on'}" width="375" height="812">`).join('')}
+          <span class="glare" aria-hidden="true"></span>
         </div>
         <div class="phone-dots">${app.capturas.map((_, i) => `<span class="${i ? '' : 'is-on'}"></span>`).join('')}</div>
       </div>`;
@@ -32,7 +33,7 @@
 
   function botones(app) {
     let html = '';
-    if (app.probar) html += `<a class="btn btn-primary" href="${esc(app.probar)}" target="_blank" rel="noopener">Probar gratis ${flecha}</a>`;
+    if (app.probar) html += `<a class="btn btn-primary btn-glow" data-magnet href="${esc(app.probar)}" target="_blank" rel="noopener">Probar gratis ${flecha}</a>`;
     if (app.pagina) html += `<a class="btn" href="${esc(app.pagina)}">Ver más</a>`;
     if (!app.probar) html += `<a class="btn btn-primary" href="${wa(app.mensaje)}" target="_blank" rel="noopener">${iconoWa} ${app.estado === 'disponible' ? 'Pedir info' : 'Avisame'}</a>`;
     return html;
@@ -47,7 +48,7 @@
             <span class="badge is-stock">${ESTADOS[app.estado] || app.estado}</span>
             <span class="badge is-soft">${esc(app.tipo)}</span>
           </div>
-          <h2 class="showcase-title">${esc(app.nombre)} <small>${esc(app.subtitulo)}</small></h2>
+          <h2 class="showcase-title"><span class="shiny">${esc(app.nombre)}</span> <small>${esc(app.subtitulo)}</small></h2>
           <p class="lead">${esc(app.resumen)}</p>
           ${app.funciones.length ? `<ul class="feature-list">${app.funciones.map(f => `<li>${esc(f)}</li>`).join('')}</ul>` : ''}
           <p class="for-who"><span>Para</span> ${app.paraQuien.map(esc).join(' · ')}</p>
@@ -62,7 +63,8 @@
       ? `<img src="${esc(app.capturas[0])}" alt="Captura de ${esc(app.nombre)}" loading="lazy">`
       : `<div class="app-placeholder"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/><path d="M34 30V70M42 33H55a8 8 0 0 1 0 16H44M44 49H57a9 9 0 0 1 0 18H42"/></svg></div>`;
     return `
-      <article class="card app-card" style="--i:${i}" data-reveal>
+      <article class="card app-card tilt" data-tilt="6" style="--i:${i}" data-reveal>
+        <span class="glare" aria-hidden="true"></span>
         <div class="app-media">${imagen}</div>
         <div class="app-body">
           <div class="app-tags">
@@ -95,6 +97,7 @@
       if (top) destacadaBox.innerHTML = destacada(top);
       grid.innerHTML = resto.map(tarjeta).join('');
       window.animarCelulares();   // está en main.js
+      if (window.FX) window.FX.activar();   // efectos 3D (js/fx.js)
       revelar();
     })
     .catch(() => {
