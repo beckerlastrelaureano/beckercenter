@@ -22,6 +22,8 @@ const hero = canvas.closest('section');
 const lugar = hero.querySelector('[data-slot-3d]');   // el 3D ocupa el lugar del dibujo plano
 const perf = window.BC_PERF;
 const alto = perf.nivel === 'alto';
+// Con "Quitar animaciones" la figura queda quieta y solo se mueve al tocarla (vivo = 0)
+const vivo = perf.quieto ? 0 : 1;
 
 /* ---------- Escena, cámara y renderizador ---------- */
 const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: alto, powerPreference: 'high-performance' });
@@ -261,7 +263,7 @@ hero.addEventListener('pointermove', e => {
 // Tocar el logo lo hace girar
 hero.addEventListener('pointerdown', e => {
   if (e.target.closest('a, button')) return;
-  mira.giro += 7;
+  mira.giro += 7 * vivo;
 }, { passive: true });
 
 function escucharGiroscopio() {
@@ -274,7 +276,9 @@ function escucharGiroscopio() {
 const esIphone = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 const pidePermiso = esIphone && typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
 const botonGiro = document.querySelector('[data-gyro]');
-if (pidePermiso && botonGiro) {
+if (perf.quieto) {
+  // Sin giroscopio: la figura solo se mueve con el dedo
+} else if (pidePermiso && botonGiro) {
   // iPhone: el permiso solo se puede pedir con un toque
   botonGiro.hidden = false;
   botonGiro.addEventListener('click', () => {
@@ -302,19 +306,19 @@ function cuadro() {
   mira.cy += (mira.y - mira.cy) * 0.06;
   mira.giro *= 0.95;
 
-  grupo.rotation.y += ((mira.cx * 0.6 + Math.sin(t * 0.5) * 0.18) - grupo.rotation.y) * 0.08 + mira.giro * dt;
-  grupo.rotation.x += ((mira.cy * 0.4 + Math.cos(t * 0.4) * 0.08 + p * 1.1) - grupo.rotation.x) * 0.08;
-  grupo.position.y = Math.sin(t * 1.1) * 0.06;
+  grupo.rotation.y += ((mira.cx * 0.6 + Math.sin(t * 0.5) * 0.18 * vivo) - grupo.rotation.y) * 0.08 + mira.giro * dt;
+  grupo.rotation.x += ((mira.cy * 0.4 + Math.cos(t * 0.4) * 0.08 * vivo + p * 1.1) - grupo.rotation.x) * 0.08;
+  grupo.position.y = Math.sin(t * 1.1) * 0.06 * vivo;
 
-  orbita1.rotation.z += dt * 0.35;
-  orbita2.rotation.z -= dt * 0.22;
+  orbita1.rotation.z += dt * 0.35 * vivo;
+  orbita2.rotation.z -= dt * 0.22 * vivo;
 
   // Al bajar: el logo se aleja y las partículas se dispersan
   const e = escalaBase * (1 - p * 0.35);
   grupo.scale.setScalar(e);
   grupo.position.z = -p * 5;
   polvo.scale.setScalar(escalaBase * (1 + p * 2.2));
-  polvo.rotation.y += dt * 0.03;
+  polvo.rotation.y += dt * 0.03 * vivo;
   polvo.rotation.x = -mira.cy * 0.15;
   polvo.position.x = -mira.cx * 0.3;
   matPolvo.opacity = 0.85 * (1 - p * 0.7);

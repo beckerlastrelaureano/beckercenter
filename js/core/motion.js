@@ -21,7 +21,7 @@
   /* ---------- 1. Figura 3D de la portada ---------- */
   // Se descarga después de que la página ya se ve, para que abra rápido.
   if (document.querySelector('.hero-3d') && perf.nivel !== 'bajo') {
-    const cargar = () => import('../3d/hero3d.js?v=7').catch(err => {
+    const cargar = () => import('../3d/hero3d.js?v=8').catch(err => {
       console.warn('El 3D no se pudo cargar; queda el dibujo plano.', err);
     });
     if (document.readyState === 'complete') cargar();

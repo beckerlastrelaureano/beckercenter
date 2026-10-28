@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex">
   <title>Diagnóstico | Becker Center</title>
   <!-- Página interna: muestra por qué un celular ve o no ve el 3D. No se enlaza desde el sitio. -->
-  <script src="js/core/rendimiento.js?v=5"></script>
+  <script src="js/core/rendimiento.js?v=6"></script>
   <style>
     body { margin: 0; padding: 20px 16px 40px; background: #050607; color: #eceeed; font: 16px/1.5 system-ui, sans-serif; }
     h1 { font-size: 20px; margin: 0 0 4px; }
@@ -46,7 +46,7 @@
       } catch (e) {}
       const filas = [
         ['Nivel elegido', perf.nivel, perf.nivel === 'bajo' ? 'mal' : 'ok'],
-        ['"Reducir movimiento" / "Quitar animaciones"', reducir ? 'ACTIVADO' : 'no', reducir ? 'mal' : 'ok'],
+        ['"Reducir movimiento" / "Quitar animaciones"', reducir ? 'ACTIVADO (3D quieto)' : 'no', reducir ? 'medio' : 'ok'],
         ['Ahorro de datos', ahorro ? 'ACTIVADO' : 'no', ahorro ? 'mal' : 'ok'],
         ['WebGL (3D del navegador)', webgl ? 'sí' : 'NO', webgl ? 'ok' : 'mal'],
         ['Núcleos del procesador', navigator.hardwareConcurrency || '?', 'medio'],
@@ -57,10 +57,10 @@
       ];
       document.getElementById('lista').innerHTML = filas.map(([k, v, c]) => `<div class="fila"><span>${k}</span><b class="${c}">${v}</b></div>`).join('');
       let msg = 'Todo bien: tu celular debería ver el 3D.';
-      if (reducir) msg = 'Tu celular tiene activado "Reducir movimiento" (en Android: Ajustes › Accesibilidad › "Quitar animaciones"). Por eso el sitio apaga el 3D y las animaciones.';
-      else if (ahorro) msg = 'Tenés activado el ahorro de datos: el sitio no descarga el 3D.';
+      if (ahorro) msg = 'Tenés activado el ahorro de datos: el sitio no descarga el 3D.';
       else if (!webgl) msg = 'Tu navegador no tiene WebGL activo: no puede mostrar 3D.';
       else if (!version.startsWith('nueva')) msg = 'Te está llegando una versión vieja del sitio guardada en el celular.';
+      else if (reducir) msg = 'Tenés activado "Quitar animaciones" (Ajustes › Accesibilidad). Ves el 3D quieto: se mueve solo cuando lo tocás, y no hay animaciones al bajar.';
       document.getElementById('veredicto').textContent = msg;
     })();
   </script>
