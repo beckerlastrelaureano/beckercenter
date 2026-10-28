@@ -1,21 +1,25 @@
 /* =========================================================
-   HERO-LOGO.JS — monograma "IB" en 3D para el Inicio (Three.js)
-   - Metal oscuro con volumen dentro del anillo verde azulado
+   HERO3D.JS — figura 3D de la portada de cada página (Three.js)
+   - Inicio: monograma "IB" · Books: libro abierto · Design: pantalla
+   - Metal con volumen dentro del anillo verde azulado
    - Polvo de partículas alrededor
    - Gira siguiendo el dedo, el mouse o la inclinación del celular
-   - Al bajar, el logo se aleja y las partículas se dispersan
+   - Al bajar, la figura se aleja y las partículas se dispersan
    - Si el celular anda lento, se simplifica solo
 
-   Lo carga js/home.js solo en niveles "alto" y "medio".
+   Lo carga js/core/motion.js solo en niveles "alto" y "medio".
+   En el HTML:
+   <canvas class="hero-3d" data-figura="logo|libro|pantalla">
+   y el dibujo plano que reemplaza lleva data-slot-3d.
    No hace falta editar este archivo.
    ========================================================= */
 
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-const hero = document.querySelector('.hero');
 const canvas = document.querySelector('.hero-3d');
-const lugar = document.querySelector('.hero .hero-inner > .mark');   // el 3D ocupa el lugar del logo plano
+const hero = canvas.closest('section');
+const lugar = hero.querySelector('[data-slot-3d]');   // el 3D ocupa el lugar del dibujo plano
 const perf = window.BC_PERF;
 const alto = perf.nivel === 'alto';
 
@@ -63,32 +67,110 @@ function mediaRosca(cx, cy, rExt, rInt) {
   return s;
 }
 
-const formas = [
-  rectangulo(31, 30, 37, 70),     // la "I"
-  rectangulo(42, 30, 55, 36),     // B: línea de arriba
-  mediaRosca(55, 41, 11, 5),      // B: pancita de arriba
-  rectangulo(44, 46, 57, 52),     // B: línea del medio
-  mediaRosca(57, 58, 12, 6),      // B: pancita de abajo
-  rectangulo(42, 64, 57, 70)      // B: línea de abajo
-];
-const PROF = 0.34;
-const geoLogo = new THREE.ExtrudeGeometry(formas, {
-  depth: PROF,
-  curveSegments: alto ? 28 : 14,
-  bevelEnabled: true,
-  bevelThickness: 0.03,
-  bevelSize: 0.022,
-  bevelSegments: alto ? 3 : 1
-});
-geoLogo.translate(0, 0, -PROF / 2);
+// Volumen a partir de formas planas, centrado en profundidad
+function extruir(formas, prof) {
+  const g = new THREE.ExtrudeGeometry(formas, {
+    depth: prof,
+    curveSegments: alto ? 28 : 14,
+    bevelEnabled: true,
+    bevelThickness: 0.03,
+    bevelSize: 0.022,
+    bevelSegments: alto ? 3 : 1
+  });
+  g.translate(0, 0, -prof / 2);
+  return g;
+}
 
+// Materiales compartidos: metal (cambia con el modo claro/oscuro),
+// verde azulado con brillo propio y "papel" para las hojas del libro
 const matLogo = alto
   ? new THREE.MeshPhysicalMaterial({ metalness: 1, roughness: 0.22, clearcoat: 1, clearcoatRoughness: 0.12 })
   : new THREE.MeshStandardMaterial({ metalness: 1, roughness: 0.28 });
-const logo = new THREE.Mesh(geoLogo, matLogo);
+const matAnillo = new THREE.MeshStandardMaterial({ color: 0x4c7474, emissive: 0x4c7474, emissiveIntensity: 0.9, metalness: 0.6, roughness: 0.3 });
+const matPapel = new THREE.MeshStandardMaterial({ color: 0xc9d1cf, roughness: 0.85, metalness: 0 });
+
+/* ---------- Figura de cada página ----------
+   Inicio = "logo", Books = "libro", Design = "pantalla".
+   Se elige con data-figura en el <canvas class="hero-3d">. */
+
+// Inicio: el monograma "IB"
+function figuraLogo() {
+  return new THREE.Mesh(extruir([
+    rectangulo(31, 30, 37, 70),     // la "I"
+    rectangulo(42, 30, 55, 36),     // B: línea de arriba
+    mediaRosca(55, 41, 11, 5),      // B: pancita de arriba
+    rectangulo(44, 46, 57, 52),     // B: línea del medio
+    mediaRosca(57, 58, 12, 6),      // B: pancita de abajo
+    rectangulo(42, 64, 57, 70)      // B: línea de abajo
+  ], 0.34), matLogo);
+}
+
+// Books: libro abierto con tapas de metal y hojas
+function figuraLibro() {
+  const libro = new THREE.Group();
+  const apertura = 0.62;     // cuánto se abre el libro
+  [-1, 1].forEach(lado => {
+    const mitad = new THREE.Group();
+    const tapa = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.4, 0.05), matLogo);
+    tapa.position.x = lado * 0.5;
+    const hojas = new THREE.Mesh(new THREE.BoxGeometry(0.93, 1.32, 0.12), matPapel);
+    hojas.position.set(lado * 0.48, 0, 0.085);
+    mitad.add(tapa, hojas);
+    // Renglones de texto en la página (verde azulado)
+    for (let i = 0; i < 7; i++) {
+      const largo = i === 6 ? 0.38 : 0.62;
+      const renglon = new THREE.Mesh(new THREE.BoxGeometry(largo, 0.035, 0.01), matAnillo);
+      renglon.position.set(lado * 0.48 - (0.62 - largo) / 2, 0.42 - i * 0.13, 0.15);   // alineados a la izquierda
+      mitad.add(renglon);
+    }
+    mitad.rotation.y = -lado * apertura;
+    libro.add(mitad);
+  });
+  const lomo = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 1.4, 16), matLogo);
+  libro.add(lomo);
+  libro.rotation.x = -0.35;     // inclinado, como apoyado sobre una mesa
+  libro.position.z = -0.25;
+  return libro;
+}
+
+// Design: pantalla con los símbolos de código "< >"
+function figuraPantalla() {
+  const g = new THREE.Group();
+  const marco = new THREE.Shape();
+  const w = 1.25, h = 0.8, r = 0.12;
+  marco.moveTo(-w + r, -h); marco.lineTo(w - r, -h); marco.quadraticCurveTo(w, -h, w, -h + r);
+  marco.lineTo(w, h - r); marco.quadraticCurveTo(w, h, w - r, h); marco.lineTo(-w + r, h);
+  marco.quadraticCurveTo(-w, h, -w, h - r); marco.lineTo(-w, -h + r); marco.quadraticCurveTo(-w, -h, -w + r, -h);
+  const hueco = new THREE.Path();
+  hueco.moveTo(-w + 0.12, -h + 0.12); hueco.lineTo(w - 0.12, -h + 0.12); hueco.lineTo(w - 0.12, h - 0.12); hueco.lineTo(-w + 0.12, h - 0.12);
+  marco.holes.push(hueco);
+  const pantalla = new THREE.Mesh(extruir([marco], 0.14), matLogo);
+  pantalla.position.y = 0.2;
+  const pie = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.45, 0.1), matLogo);
+  pie.position.y = -0.8;
+  const base = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.06, 0.32), matLogo);
+  base.position.y = -1.03;
+  // Símbolos "<" y ">" flotando delante de la pantalla
+  function flecha(dir) {
+    const s = new THREE.Shape();
+    const a = 0.32, t = 0.09;
+    s.moveTo(0, a); s.lineTo(-a * 0.8, 0); s.lineTo(0, -a); s.lineTo(t, -a + t); s.lineTo(-a * 0.8 + t * 1.4, 0); s.lineTo(t, a - t);
+    s.closePath();
+    const m = new THREE.Mesh(extruir([s], 0.1), matAnillo);
+    m.scale.x = dir;
+    m.position.set(dir * -0.45, 0.2, 0.3);
+    return m;
+  }
+  g.add(pantalla, pie, base, flecha(1), flecha(-1));
+  g.scale.setScalar(0.8);
+  g.position.y = 0.08;
+  return g;
+}
+
+const figura = canvas.dataset.figura || 'logo';
+const logo = ({ libro: figuraLibro, pantalla: figuraPantalla }[figura] || figuraLogo)();
 
 // Anillo del logo, con brillo propio
-const matAnillo = new THREE.MeshStandardMaterial({ color: 0x4c7474, emissive: 0x4c7474, emissiveIntensity: 0.9, metalness: 0.6, roughness: 0.3 });
 const anillo = new THREE.Mesh(new THREE.TorusGeometry(46 * S, 0.05, 24, alto ? 180 : 90), matAnillo);
 
 // Dos órbitas finas que giran alrededor (dan profundidad)

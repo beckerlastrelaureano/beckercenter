@@ -45,7 +45,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Montserrat:wght@300;400;500;600;700&display=swap">
 
-  <link rel="stylesheet" href="css/styles.css?v=5">
+  <link rel="stylesheet" href="css/styles.css?v=10">
 
   <!-- Datos para Google: quién sos -->
   <script type="application/ld+json">
@@ -93,11 +93,11 @@
     <!-- ================= HERO (lo primero que se ve) ================= -->
     <section class="hero">
       <!-- Monograma 3D (js/3d/hero-logo.js). En celulares lentos no se usa. -->
-      <canvas class="hero-3d" aria-hidden="true"></canvas>
+      <canvas class="hero-3d" data-figura="logo" aria-hidden="true"></canvas>
       <!-- Fondo líquido: solo en celulares lentos, en lugar del 3D (js/fx.js) -->
       <canvas class="fx-canvas fx-liquid" data-fx="liquid" aria-hidden="true"></canvas>
       <div class="hero-inner">
-        <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><circle class="ring" cx="50" cy="50" r="46"/><path class="ib" d="M34 30V70M42 33H55a8 8 0 0 1 0 16H44M44 49H57a9 9 0 0 1 0 18H42"/></svg>
+        <svg class="mark" data-slot-3d viewBox="0 0 100 100" aria-hidden="true"><circle class="ring" cx="50" cy="50" r="46"/><path class="ib" d="M34 30V70M42 33H55a8 8 0 0 1 0 16H44M44 49H57a9 9 0 0 1 0 18H42"/></svg>
 
         <h1 class="visually-hidden">Becker Center</h1>
         <div class="wordmark" aria-hidden="true">
@@ -144,15 +144,28 @@
     </div>
 
 
-    <!-- ================= TRES CAMINOS ================= -->
-    <section class="section" id="caminos">
+    <!-- ================= MANIFIESTO (se ilumina palabra por palabra al bajar) ================= -->
+    <!-- TEXTO EDITABLE: las palabras dentro de <em> se ven en verde azulado -->
+    <section class="manifiesto" data-manifiesto>
+      <div class="sticky-box">
+        <div class="wrap">
+          <p class="eyebrow">Manifiesto</p>
+          <p class="manifiesto-texto">No vendo rutinas. Te ayudo a construir <em>hábitos</em>, a entrenar con <em>método</em> y a convertirte en la versión que <em>querés ser.</em></p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================= TRES CAMINOS (pasan de costado al bajar) ================= -->
+    <section class="section caminos" id="caminos" data-hscroll>
+      <div class="sticky-box">
       <div class="wrap">
         <div class="paths-head" data-reveal>
           <p class="eyebrow">Un propósito</p>
           <h2 class="h2" data-split>Distintas formas de <em class="shiny">transformar.</em></h2>
         </div>
 
-        <div class="paths" data-stagger>
+        <div class="paths hs-track" data-stagger>
 
           <!-- Camino 01: Books -->
           <a class="card path tilt" data-tilt="8" href="books.html">
@@ -186,11 +199,14 @@
               <span class="path-icon"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path class="accent" d="M10 18.5h4"/><path d="M10.5 7v6M12.5 7h1.2a1.5 1.5 0 0 1 0 3h-1.2h1.5a1.5 1.5 0 0 1 0 3h-1.5"/></svg></span>
             </div>
             <h3>Gym <small>App</small></h3>
-            <p>Donde tu esfuerzo se convierte en progreso. Tus rutinas, tus marcas y tu evolución en el celular.</p>
+            <p>Sistema de gestión para gimnasios y personal trainers: alumnos, rutinas, cuotas y asistencia.</p>
             <span class="path-go">Conocer la app <svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
           </a>
 
         </div>
+        <!-- Barra que se llena mientras pasan las tarjetas -->
+        <div class="hs-bar" aria-hidden="true"><i></i></div>
+      </div>
       </div>
     </section>
 
@@ -202,7 +218,7 @@
         <!-- FOTO: cuando tengas una, reemplazá el <svg> por:
              <img src="img/becker.jpg" alt="Becker, entrenador" loading="lazy">  -->
         <figure class="about-photo" data-reveal style="margin:0">
-          <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><circle class="ring" cx="50" cy="50" r="46"/><path class="ib" d="M34 30V70M42 33H55a8 8 0 0 1 0 16H44M44 49H57a9 9 0 0 1 0 18H42"/></svg>
+          <svg class="mark" data-parallax="0.35" viewBox="0 0 100 100" aria-hidden="true"><circle class="ring" cx="50" cy="50" r="46"/><path class="ib" d="M34 30V70M42 33H55a8 8 0 0 1 0 16H44M44 49H57a9 9 0 0 1 0 18H42"/></svg>
           <figcaption>Becker · Profesor de Educación Física</figcaption>
         </figure>
 
@@ -343,6 +359,6 @@
   <script src="js/main.js?v=4"></script>
   <script src="js/fx.js?v=4"></script>
   <script src="js/core/scroll.js?v=5"></script>
-  <script src="js/home.js?v=5"></script>
+  <script src="js/core/motion.js?v=9"></script>
 </body>
 </html>

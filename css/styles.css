@@ -1714,13 +1714,56 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   pointer-events: none;
   transition: opacity 1.4s var(--ease);
 }
-.hero.is-3d .hero-3d { opacity: 1; }
-/* Al arrastrar el dedo para girar el logo no se selecciona texto */
-.hero.is-3d { -webkit-user-select: none; user-select: none; }
-.hero.is-3d .hero-inner > .mark { opacity: 0; transition: opacity .8s; }
-/* Con 3D el logo ocupa más lugar; el fondo líquido queda solo para celulares lentos */
-:root:not([data-nivel="bajo"]) .hero .hero-inner > .mark { width: clamp(150px, 44vw, 240px); }
-:root:not([data-nivel="bajo"]) .hero .fx-liquid { display: none; }
+.is-3d > .hero-3d { opacity: 1; }
+/* Al arrastrar el dedo para girar la figura no se selecciona texto */
+.is-3d { -webkit-user-select: none; user-select: none; }
+.is-3d [data-slot-3d] { opacity: 0 !important; transition: opacity .8s; }
+/* Con 3D la figura ocupa más lugar; el fondo líquido queda solo para celulares lentos */
+:root:not([data-nivel="bajo"]) .hero [data-slot-3d] { width: clamp(150px, 44vw, 240px); }
+:root:not([data-nivel="bajo"]) .page-hero [data-slot-3d] { width: clamp(130px, 38vw, 200px); height: auto; }
+:root:not([data-nivel="bajo"]) :is(.hero, .page-hero) .fx-liquid { display: none; }
+
+/* Con GSAP activo, el movimiento lo maneja el scroll (sin transiciones que lo frenen) */
+.gsap-on :is(.train, .bento, .app-grid, .plans, .stats, .steps, .showcase, .wheel-wrap, .faq, .flow, .about-text, .h2, .gx-closing-title, [data-zoom]) {
+  transition-property: opacity;
+  will-change: transform;
+}
+.gsap-on .about-photo { overflow: hidden; }
+/* Nada de lo que se mueve en 3D puede correr la página de costado */
+main { overflow-x: clip; }
+/* Secciones "pegajosas": la sección es alta y su contenido queda fijo
+   en pantalla mientras se anima (más liviano que fijar con JavaScript) */
+.is-sticky > .sticky-box { position: sticky; top: 0; min-height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr); align-content: center; }
+.manifiesto.is-sticky { height: 260svh; min-height: 0; display: block; padding-block: 0; }
+
+/* Manifiesto */
+.manifiesto {
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  padding-block: 80px;
+  background: radial-gradient(70% 50% at 50% 50%, var(--teal-glow), transparent 70%);
+}
+.manifiesto-texto {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(32px, 8.6vw, 76px);
+  line-height: 1.08;
+  letter-spacing: -.03em;
+  text-wrap: balance;
+  transform-origin: 0% 50%;
+}
+.manifiesto-texto em { font-style: normal; color: var(--teal-hi); }
+
+/* Tarjetas que pasan de costado (solo con GSAP; si no, quedan en grilla) */
+.is-hscroll { overflow: clip; padding-block: 0; }
+.is-hscroll > .sticky-box { padding-block: calc(var(--header-h) + 12px) 32px; }
+.is-hscroll .hs-track { display: flex; width: max-content; gap: 16px; }
+.is-hscroll .hs-track > .path { flex: none; width: min(78vw, 420px); min-height: 360px; }
+.hs-bar { display: none; }
+.is-hscroll .hs-bar { display: block; height: 2px; margin-top: 28px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.is-hscroll .hs-bar i { display: block; height: 100%; background: var(--teal-hi); transform: scaleX(0); transform-origin: left; }
 
 /* Botón para activar el giroscopio (solo iPhone) */
 .gyro-btn {
