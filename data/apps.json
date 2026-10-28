@@ -1,0 +1,45 @@
+{
+  "apps": [
+    {
+      "id": "gym-app",
+      "nombre": "Gym App",
+      "subtitulo": "Becker App",
+      "estado": "disponible",
+      "destacada": true,
+      "tipo": "App de entrenamiento",
+      "resumen": "Tus rutinas, tus marcas y tu evolución en el celular. Registrás cada serie y la app te muestra cómo progresás.",
+      "paraQuien": ["Alumnos", "Entrenadores", "Gimnasios"],
+      "funciones": [
+        "Rutinas según tu objetivo y nivel",
+        "353 ejercicios con foto y técnica",
+        "Cronómetro de descanso automático",
+        "Récords, gráficos y estadísticas",
+        "7 calculadoras: 1RM, IMC, discos y más",
+        "Se instala en el celular y funciona sin internet"
+      ],
+      "capturas": [
+        "img/apps/gymapp-inicio.jpg",
+        "img/apps/gymapp-ejercicios.jpg",
+        "img/apps/gymapp-calculadoras.jpg"
+      ],
+      "probar": "https://beckerlastrelaureano.github.io/gymtracker/",
+      "pagina": "gym-app.html",
+      "mensaje": "Hola Becker, quiero información sobre Gym App."
+    },
+    {
+      "id": "becker-coach",
+      "nombre": "Becker Coach",
+      "subtitulo": "Para entrenadores",
+      "estado": "proximamente",
+      "destacada": false,
+      "tipo": "Plataforma para entrenadores",
+      "resumen": "Gestioná a tus alumnos, asigná rutinas y seguí su progreso desde un solo lugar.",
+      "paraQuien": ["Entrenadores", "Gimnasios"],
+      "funciones": [],
+      "capturas": [],
+      "probar": "",
+      "pagina": "",
+      "mensaje": "Hola Becker, quiero que me avises cuando salga Becker Coach."
+    }
+  ]
+}

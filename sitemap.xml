@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Lista de páginas para Google. Si sumás una página nueva, agregá un bloque <url>. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://beckerlastrelaureano.github.io/beckercenter/</loc></url>
+  <url><loc>https://beckerlastrelaureano.github.io/beckercenter/books.html</loc></url>
+  <url><loc>https://beckerlastrelaureano.github.io/beckercenter/design.html</loc></url>
+  <url><loc>https://beckerlastrelaureano.github.io/beckercenter/gym-app.html</loc></url>
+</urlset>

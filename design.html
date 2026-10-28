@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!-- ===== SEO ===== -->
+  <title>Becker Design | Apps de entrenamiento y proyectos digitales</title>
+  <meta name="description" content="Becker Design: apps y proyectos digitales de Becker para entrenar mejor y medir tu progreso. Conocé Gym App y pedí tu propio proyecto.">
+  <link rel="canonical" href="https://beckerlastrelaureano.github.io/beckercenter/design.html">
+  <meta name="theme-color" content="#050607">
+
+  <!-- ===== Vista previa al compartir ===== -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:site_name" content="Becker Center">
+  <meta property="og:title" content="Becker Design — Apps para entrenar mejor">
+  <meta property="og:description" content="Apps y proyectos digitales de Becker. Probá Gym App gratis.">
+  <meta property="og:url" content="https://beckerlastrelaureano.github.io/beckercenter/design.html">
+  <meta property="og:image" content="https://beckerlastrelaureano.github.io/beckercenter/img/og/og-inicio.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <script>try{var t=localStorage.getItem('bc-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Montserrat:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preload" href="data/apps.json" as="fetch" crossorigin>
+</head>
+
+<body data-page="design">
+
+  <!-- ================= ENCABEZADO ================= -->
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html" aria-label="Becker Center, inicio">
+        <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><circle class="ring" cx="50" cy="50" r="46"/><path class="ib" d="M34 30V70M42 33H55a8 8 0 0 1 0 16H44M44 49H57a9 9 0 0 1 0 18H42"/></svg>
+        <span class="wordmark">B<span class="e3"></span>CKER</span>
+      </a>
+
+      <nav class="nav-top" aria-label="Principal">
+        <a href="index.html" data-nav="inicio">Inicio</a>
+        <a href="books.html" data-nav="books">Books</a>
+        <a href="design.html" data-nav="design">Design</a>
+        <a href="gym-app.html" data-nav="gymapp">Gym App</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" type="button" data-theme-toggle aria-label="Cambiar modo claro u oscuro">
+          <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- ================= PORTADA DE DESIGN ================= -->
+    <section class="page-hero">
+      <div class="wrap">
+        <svg class="page-hero-icon" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="9" width="52" height="36" rx="5"/><path class="accent" d="M22 56h20M32 45v11"/><path class="accent" d="M24 21l-6 6 6 6M40 21l6 6-6 6"/></svg>
+        <h1 class="page-title">
+          <span class="wordmark">B<span class="e3"></span>CKER</span>
+          <span class="subline"><span>Design</span></span>
+        </h1>
+        <!-- TEXTO EDITABLE -->
+        <p class="hero-slogan">Herramientas digitales para <span>entrenar mejor.</span></p>
+        <p class="hero-intro">Diseño apps que uso con mis alumnos: simples, rápidas y pensadas para el celular. Probalas gratis o pedime la tuya.</p>
+      </div>
+    </section>
+
+
+    <!-- ================= APP DESTACADA (la crea js/design.js) ================= -->
+    <section class="section" style="padding-top:32px">
+      <div class="wrap">
+        <p class="eyebrow" data-reveal>App destacada</p>
+        <div data-featured></div>
+      </div>
+    </section>
+
+
+    <!-- ================= MÁS PROYECTOS ================= -->
+    <section class="section" style="padding-top:16px">
+      <div class="wrap">
+        <div data-reveal>
+          <p class="eyebrow">Más proyectos</p>
+          <h2 class="h2">Lo que viene en <em>Becker Design.</em></h2>
+        </div>
+        <div class="app-grid" data-apps></div>
+      </div>
+    </section>
+
+
+    <!-- ================= PROYECTO A MEDIDA ================= -->
+    <section class="section closing">
+      <div class="wrap" data-reveal>
+        <p class="eyebrow">A medida</p>
+        <h2 class="h2">¿Querés <em>tu propia app?</em></h2>
+        <!-- TEXTO EDITABLE -->
+        <p class="lead">Si sos entrenador o tenés un gimnasio, puedo diseñar una app con tu marca para tus alumnos.</p>
+        <ul class="check-list">
+          <li>Funciona en cualquier celular, sin descargar nada de una tienda</li>
+          <li>Con tu logo, tus colores y tus rutinas</li>
+          <li>Sin costos de servidor</li>
+        </ul>
+        <div class="hero-cta">
+          <a class="btn btn-primary" data-wa="Hola Becker, me interesa una app a medida para mi gimnasio o mis alumnos.">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+            Pedir presupuesto
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ================= PIE DE PÁGINA ================= -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><circle class="ring" cx="50" cy="50" r="46"/><path class="ib" d="M34 30V70M42 33H55a8 8 0 0 1 0 16H44M44 49H57a9 9 0 0 1 0 18H42"/></svg>
+          <span class="wordmark">B<span class="e3"></span>CKER</span>
+          <p>Un propósito. Distintas formas de transformar.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Secciones</h4>
+          <ul>
+            <li><a href="books.html">Becker Books</a></li>
+            <li><a href="design.html">Becker Design</a></li>
+            <li><a href="gym-app.html">Gym App</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a data-wa>WhatsApp</a></li>
+            <li><a data-ig>@beckercenter</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year></span> Becker Center</span>
+        <span>Tu cuerpo cambia. <b>Vos también.</b></span>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ================= MENÚ INFERIOR (celular) ================= -->
+  <nav class="tabbar" aria-label="Menú">
+    <a href="index.html" data-nav="inicio"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Inicio</a>
+    <a href="books.html" data-nav="books"><svg viewBox="0 0 24 24"><path d="M3 5.5C5.5 4.5 8.5 4.5 12 6.5v13c-3.5-2-6.5-2-9-1zM12 6.5c3.5-2 6.5-2 9-1v13c-2.5-1-5.5-1-9 1"/></svg>Books</a>
+    <a href="design.html" data-nav="design"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Design</a>
+    <a href="gym-app.html" data-nav="gymapp"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg>Gym App</a>
+  </nav>
+
+  <a class="wa-float" data-wa="Hola Becker, quiero consultar por tus apps." aria-label="Escribime por WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.6.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>
+  </a>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/design.js"></script>
+</body>
+</html>
