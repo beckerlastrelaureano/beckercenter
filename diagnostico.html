@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Diagnóstico | Becker Center</title>
+  <!-- Página interna: muestra por qué un celular ve o no ve el 3D. No se enlaza desde el sitio. -->
+  <script src="js/core/rendimiento.js?v=5"></script>
+  <style>
+    body { margin: 0; padding: 20px 16px 40px; background: #050607; color: #eceeed; font: 16px/1.5 system-ui, sans-serif; }
+    h1 { font-size: 20px; margin: 0 0 4px; }
+    p.sub { margin: 0 0 18px; color: #8f9b9a; font-size: 14px; }
+    .fila { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid rgba(236,240,239,.1); }
+    .fila b { font-weight: 600; text-align: right; }
+    .ok { color: #5fe0a0; } .mal { color: #ff8a7a; } .medio { color: #f5c76b; }
+    .veredicto { margin: 20px 0; padding: 14px; border-radius: 12px; background: #101415; border: 1px solid #4c7474; }
+    a.btn { display: block; margin-top: 10px; padding: 14px; border-radius: 999px; text-align: center; background: #4c7474; color: #fff; text-decoration: none; font-weight: 600; }
+    a.btn.sec { background: transparent; border: 1px solid rgba(236,240,239,.25); }
+  </style>
+</head>
+<body>
+  <h1>Diagnóstico del 3D</h1>
+  <p class="sub">Sacale captura a esta pantalla y mandásela a Claude.</p>
+
+  <div id="lista"></div>
+  <div class="veredicto" id="veredicto"></div>
+
+  <a class="btn" href="index.html?nivel=alto">Abrir Inicio con 3D forzado</a>
+  <a class="btn sec" href="index.html">Abrir Inicio normal</a>
+
+  <script>
+    (async function () {
+      const perf = window.BC_PERF || {};
+      const reducir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const ahorro = !!(navigator.connection && navigator.connection.saveData);
+      let webgl = false;
+      try { const c = document.createElement('canvas'); webgl = !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) {}
+      let sw = 0;
+      try { sw = (await navigator.serviceWorker.getRegistrations()).length; } catch (e) {}
+      let version = '?';
+      try {
+        const html = await (await fetch('index.html?nocache=' + Date.now(), { cache: 'no-store' })).text();
+        version = html.includes('data-figura="logo"') ? 'nueva (3D)' : 'vieja';
+      } catch (e) {}
+      const filas = [
+        ['Nivel elegido', perf.nivel, perf.nivel === 'bajo' ? 'mal' : 'ok'],
+        ['"Reducir movimiento" / "Quitar animaciones"', reducir ? 'ACTIVADO' : 'no', reducir ? 'mal' : 'ok'],
+        ['Ahorro de datos', ahorro ? 'ACTIVADO' : 'no', ahorro ? 'mal' : 'ok'],
+        ['WebGL (3D del navegador)', webgl ? 'sí' : 'NO', webgl ? 'ok' : 'mal'],
+        ['Núcleos del procesador', navigator.hardwareConcurrency || '?', 'medio'],
+        ['Memoria (GB)', navigator.deviceMemory || '?', 'medio'],
+        ['Copias guardadas del sitio viejo', sw ? sw + ' (service worker)' : 'ninguna', sw ? 'medio' : 'ok'],
+        ['Versión del sitio que llega', version, version.startsWith('nueva') ? 'ok' : 'mal'],
+        ['Navegador', (navigator.userAgent.match(/(Instagram|FBAN|Chrome|Firefox|Safari|SamsungBrowser)[^ ]*/) || ['?'])[0], 'medio']
+      ];
+      document.getElementById('lista').innerHTML = filas.map(([k, v, c]) => `<div class="fila"><span>${k}</span><b class="${c}">${v}</b></div>`).join('');
+      let msg = 'Todo bien: tu celular debería ver el 3D.';
+      if (reducir) msg = 'Tu celular tiene activado "Reducir movimiento" (en Android: Ajustes › Accesibilidad › "Quitar animaciones"). Por eso el sitio apaga el 3D y las animaciones.';
+      else if (ahorro) msg = 'Tenés activado el ahorro de datos: el sitio no descarga el 3D.';
+      else if (!webgl) msg = 'Tu navegador no tiene WebGL activo: no puede mostrar 3D.';
+      else if (!version.startsWith('nueva')) msg = 'Te está llegando una versión vieja del sitio guardada en el celular.';
+      document.getElementById('veredicto').textContent = msg;
+    })();
+  </script>
+</body>
+</html>
