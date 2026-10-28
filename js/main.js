@@ -102,6 +102,26 @@
   };
   window.animarCelulares();
 
+  /* ---------- Salto entre páginas con telón ---------- */
+  // Al ir a otra página del sitio, un telón con el logo cubre la pantalla
+  // y se abre en la página nueva (ver js/core/rendimiento.js y la sección 20 del CSS).
+  const perf = window.BC_PERF || {};
+  if (!perf.reducir) {
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a[href]');
+      if (!a || e.defaultPrevented || a.target || a.hasAttribute('data-wa') || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      const url = new URL(a.href, location.href);
+      if (url.origin !== location.origin || url.pathname === location.pathname) return;
+      if (!/\.html$|\/$/.test(url.pathname)) return;
+      e.preventDefault();
+      try { sessionStorage.setItem('bc-telon', '1'); } catch (err) {}
+      root.classList.add('telon-out');
+      setTimeout(() => { location.href = url.href; }, 430);
+    });
+    // Si vuelven con "atrás", el telón no debe quedar puesto
+    addEventListener('pageshow', e => { if (e.persisted) root.classList.remove('telon-out', 'telon-in'); });
+  }
+
   /* ---------- Año del pie de página ---------- */
   document.querySelectorAll('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
 })();

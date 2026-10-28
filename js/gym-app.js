@@ -1,92 +1,123 @@
 /* =========================================================
    GYM-APP.JS — interacciones de la página de Gym App
-   - Precio del plan (sale de js/config.js)
-   - Rueda de objetivos
+   - Precios de los planes y link de la demo (salen de js/config.js)
+   - Funciones: el celular gira y cambia de pantalla al bajar
+   - "Video" de la app: recorrido animado con las capturas
    - Capturas en 3D que se deslizan
-   - Línea de "Cómo funciona" que se llena al bajar
    - Pestañas con indicador que se desliza
-   - Números que cuentan y cronómetro de ejemplo
    No hace falta editar este archivo para cambiar textos.
    ========================================================= */
 
 (function () {
   const cfg = window.BECKER || {};
-  const reducir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const perf = window.BC_PERF || {};
+  const quieto = !!perf.reducir;
   const $ = s => document.querySelector(s);
 
-  /* ---------- Precio del plan mensual ---------- */
-  if (cfg.precioGymApp) {
-    document.querySelectorAll('[data-gym-price]').forEach(el => { el.textContent = cfg.precioGymApp; });
-    document.querySelectorAll('[data-gym-period]').forEach(el => { el.hidden = false; });
-  }
+  /* ---------- Precios y link de la demo ---------- */
+  document.querySelectorAll('[data-precio]').forEach(el => {
+    const valor = cfg[el.dataset.precio];
+    if (!valor) return;
+    el.textContent = valor;
+    const mes = el.nextElementSibling;
+    if (mes) mes.hidden = false;
+  });
+  if (cfg.demoGymApp) document.querySelectorAll('[data-demo]').forEach(a => { a.href = cfg.demoGymApp; });
 
-  /* ---------- Rueda de objetivos ---------- */
-  (function rueda() {
-    const wheel = $('[data-wheel]');
-    const drum = $('[data-wheel-drum]');
-    if (!wheel || !drum) return;
-    const items = [...drum.children];
-    const paso = 360 / items.length;   // ángulo entre opciones
-    const radio = 120;
-    // "pos" sigue contando sin volver a 0, así la rueda gira siempre para el mismo lado
-    let pos = 0, actual = 0, auto = null, inicioY = null, base = 0;
+  /* ---------- Funciones con el celular que gira ---------- */
+  (function funciones() {
+    const seccion = $('[data-features]');
+    if (!seccion) return;
+    const articulos = [...seccion.querySelectorAll('.features-text article')];
+    const img = seccion.querySelector('[data-feature-img]');
+    const celular = seccion.querySelector('[data-feature-phone]');
+    const puntos = [...seccion.querySelectorAll('.features-dots i')];
+    let actual = -1;
 
-    items.forEach((li, i) => {
-      li.style.transform = `rotateX(${-i * paso}deg) translateZ(${radio}px)`;
-    });
-
-    function ir(nuevo) {
-      pos = nuevo;
-      actual = ((pos % items.length) + items.length) % items.length;
-      drum.style.transform = `translateZ(${-radio}px) rotateX(${pos * paso}deg)`;
-      items.forEach((li, j) => li.classList.toggle('is-on', j === actual));
-      const li = items[actual];
-      $('[data-wheel-titulo]').textContent = li.textContent;
-      $('[data-wheel-dias]').textContent = li.dataset.dias;
-      $('[data-wheel-texto]').textContent = li.dataset.texto;
-      const info = $('.wheel-info');
-      info.classList.remove('is-swap'); void info.offsetWidth; info.classList.add('is-swap');
+    function mostrar(i) {
+      if (i === actual) return;
+      actual = i;
+      articulos.forEach((a, j) => a.classList.toggle('is-on', j === i));
+      puntos.forEach((p, j) => p.classList.toggle('is-on', j === i));
+      const a = articulos[i];
+      // Cambio de pantalla con un fundido
+      img.classList.remove('is-on');
+      setTimeout(() => {
+        if (img.getAttribute('src') !== a.dataset.pantalla) img.src = a.dataset.pantalla;
+        img.style.objectPosition = 'center ' + (a.dataset.foco || 'top');
+        img.classList.add('is-on');
+      }, 180);
     }
-    function detener() { clearInterval(auto); auto = null; }
-    function arrancar() { if (!reducir && !auto) auto = setInterval(() => ir(pos + 1), 2600); }
 
-    $('[data-wheel-prev]').addEventListener('click', () => { ir(pos - 1); detener(); });
-    $('[data-wheel-next]').addEventListener('click', () => { ir(pos + 1); detener(); });
-    wheel.addEventListener('keydown', e => {
-      if (e.key === 'ArrowDown') { ir(pos + 1); detener(); e.preventDefault(); }
-      if (e.key === 'ArrowUp') { ir(pos - 1); detener(); e.preventDefault(); }
+    if (window.gsap && window.ScrollTrigger && !quieto) {
+      seccion.classList.add('is-sticky', 'is-steps');
+      gsap.fromTo(celular,
+        { rotateY: -32, rotateX: 10, transformPerspective: 1200 },
+        {
+          rotateY: 32, rotateX: -6, ease: 'none',
+          scrollTrigger: {
+            trigger: seccion, start: 'top top', end: 'bottom bottom', scrub: 0.5,
+            onUpdate: s => mostrar(Math.min(articulos.length - 1, Math.floor(s.progress * articulos.length)))
+          }
+        });
+    } else {
+      // Sin animaciones: todas las funciones en lista y el celular quieto
+      articulos.forEach(a => a.classList.add('is-on'));
+    }
+    mostrar(0);
+  })();
+
+  /* ---------- "Video" de la app ---------- */
+  (function video() {
+    const caja = $('[data-video]');
+    if (!caja) return;
+    const tomas = [...caja.querySelectorAll('.dv-shot')];
+    const toque = caja.querySelector('.dv-tap');
+    const barra = $('[data-video-progress]');
+    const pasos = [...document.querySelectorAll('[data-video-steps] li')];
+    const boton = $('[data-video-play]');
+    // Dónde "toca el dedo" en cada pantalla (porcentaje del ancho y alto)
+    const guion = [
+      { toma: 0, x: 50, y: 57, dur: 2800 },   // Entrar con el DNI
+      { toma: 1, x: 50, y: 40, dur: 3200 },   // Tocar "Día 1"
+      { toma: 2, x: 86, y: 34, dur: 3200 }    // Marcar una serie
+    ];
+    const total = guion.reduce((s, g) => s + g.dur, 0);
+    let t = 0, ultimo = 0, andando = !quieto, visible = false, raf = 0, paso = -1;
+
+    function ir(i) {
+      paso = i;
+      tomas.forEach((im, j) => im.classList.toggle('is-on', j === guion[i].toma));
+      pasos.forEach((li, j) => li.classList.toggle('is-on', j === i));
+      toque.classList.remove('is-tap');
+      toque.style.left = guion[i].x + '%';
+      toque.style.top = guion[i].y + '%';
+    }
+    function cuadro(ahora) {
+      if (!ultimo) ultimo = ahora;
+      t = (t + (ahora - ultimo)) % total;
+      ultimo = ahora;
+      // Qué paso del guion toca ahora
+      let i = 0, inicio = 0;
+      while (i < guion.length - 1 && t >= inicio + guion[i].dur) { inicio += guion[i].dur; i++; }
+      if (i !== paso) ir(i);
+      // El dedo toca cerca del final de cada paso
+      toque.classList.toggle('is-tap', t - inicio > guion[i].dur - 900);
+      barra.style.transform = `scaleX(${t / total})`;
+      if (andando && visible) raf = requestAnimationFrame(cuadro);
+    }
+    function arrancar() { if (andando && visible) { ultimo = 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(cuadro); } }
+
+    boton.addEventListener('click', () => {
+      andando = !andando;
+      caja.classList.toggle('is-paused', !andando);
+      boton.setAttribute('aria-label', andando ? 'Pausar video' : 'Reproducir video');
+      if (andando) arrancar(); else cancelAnimationFrame(raf);
     });
-
-    // Arrastrar con el dedo hacia arriba o abajo
-    wheel.addEventListener('pointerdown', e => { inicioY = e.clientY; base = pos; detener(); wheel.setPointerCapture(e.pointerId); drum.classList.add('is-drag'); });
-    wheel.addEventListener('pointermove', e => {
-      if (inicioY === null) return;
-      const d = (inicioY - e.clientY) / 4;          // grados arrastrados
-      drum.style.transform = `translateZ(${-radio}px) rotateX(${base * paso + d}deg)`;
-    });
-    const soltar = e => {
-      if (inicioY === null) return;
-      const d = (inicioY - e.clientY) / 4;
-      inicioY = null;
-      drum.classList.remove('is-drag');
-      // Si fue un toque (sin arrastrar), elige la opción tocada
-      if (Math.abs(d) < 1.5) {
-        const li = document.elementsFromPoint(e.clientX, e.clientY).find(el => el.parentElement === drum);
-        if (!li) return ir(base);
-        // Camino más corto hasta la opción tocada
-        let dif = items.indexOf(li) - actual;
-        if (dif > items.length / 2) dif -= items.length;
-        if (dif < -items.length / 2) dif += items.length;
-        return ir(base + dif);
-      }
-      ir(base + Math.round(d / paso));
-    };
-    wheel.addEventListener('pointerup', soltar);
-    wheel.addEventListener('pointercancel', soltar);
-
+    caja.classList.toggle('is-paused', !andando);
+    if (!andando) boton.setAttribute('aria-label', 'Reproducir video');
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? arrancar() : cancelAnimationFrame(raf); }, { threshold: 0.3 }).observe(caja);
     ir(0);
-    // Gira sola solo mientras se ve
-    new IntersectionObserver(([e]) => (e.isIntersecting ? arrancar() : detener()), { threshold: 0.4 }).observe(wheel);
   })();
 
   /* ---------- Capturas en 3D ---------- */
@@ -125,26 +156,7 @@
       if (Math.abs(d) > 30) { ir(actual + (d < 0 ? 1 : -1)); clearInterval(auto); }
     });
     ir(0);
-    if (!reducir) auto = setInterval(() => ir(actual + 1), 3500);
-  })();
-
-  /* ---------- Línea de "Cómo funciona" ---------- */
-  (function progreso() {
-    const lista = $('[data-progress]');
-    if (!lista) return;
-    let pendiente = false;
-    function medir() {
-      pendiente = false;
-      const r = lista.getBoundingClientRect();
-      const centro = innerHeight * 0.6;
-      const p = Math.min(1, Math.max(0, (centro - r.top) / r.height));
-      lista.style.setProperty('--p', p.toFixed(3));
-      [...lista.children].forEach(li => {
-        li.classList.toggle('is-done', li.getBoundingClientRect().top < centro);
-      });
-    }
-    addEventListener('scroll', () => { if (!pendiente) { pendiente = true; requestAnimationFrame(medir); } }, { passive: true });
-    medir();
+    if (!quieto) auto = setInterval(() => ir(actual + 1), 3500);
   })();
 
   /* ---------- Pestañas con indicador ---------- */
@@ -152,7 +164,7 @@
     const tabs = [...document.querySelectorAll('.tabs [role="tab"]')];
     const pill = $('.tabs-pill');
     function mover(tab) {
-      if (!pill) return;
+      if (!pill || !tab) return;
       pill.style.width = tab.offsetWidth + 'px';
       pill.style.transform = `translateX(${tab.offsetLeft - 5}px)`;
     }
@@ -166,35 +178,8 @@
         mover(tab);
       });
     });
-    const activa = tabs.find(t => t.getAttribute('aria-selected') === 'true');
-    if (activa) { mover(activa); addEventListener('resize', () => mover(tabs.find(t => t.getAttribute('aria-selected') === 'true'))); }
+    const activa = () => tabs.find(t => t.getAttribute('aria-selected') === 'true');
+    mover(activa());
+    addEventListener('resize', () => mover(activa()));
   })();
-
-  /* ---------- Números que cuentan ---------- */
-  const numeros = document.querySelectorAll('[data-count-to]');
-  if ('IntersectionObserver' in window && !reducir) {
-    numeros.forEach(el => { el.textContent = '0'; });
-    const io = new IntersectionObserver(entries => entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      io.unobserve(e.target);
-      const fin = +e.target.dataset.countTo;
-      const inicio = performance.now();
-      (function paso(t) {
-        const p = Math.min((t - inicio) / 1400, 1);
-        e.target.textContent = Math.round(fin * (1 - Math.pow(1 - p, 3)));
-        if (p < 1) requestAnimationFrame(paso);
-      })(inicio);
-    }), { threshold: 0.6 });
-    numeros.forEach(el => io.observe(el));
-  }
-
-  /* ---------- Cronómetro de descanso de ejemplo ---------- */
-  const reloj = $('[data-rest-timer]');
-  if (reloj && !reducir) {
-    let s = 90;
-    setInterval(() => {
-      s = s <= 0 ? 90 : s - 1;
-      reloj.textContent = String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
-    }, 1000);
-  }
 })();

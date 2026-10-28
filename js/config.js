@@ -18,9 +18,13 @@ window.BECKER = {
   // Usuario de Instagram (sin @).
   instagram: 'beckercenter',
 
-  // Precio mensual de Gym App, tal como querés que se vea. Ejemplo: '$8.000'
-  // Si lo dejás vacío '' la página muestra "Consultá el valor".
-  precioGymApp: '',
+  // Precios mensuales de Gym App, tal como querés que se vean. Ejemplo: '$25.000'
+  // Si los dejás vacíos '' la página muestra "Consultá el valor".
+  precioPlanTrainer: '',
+  precioPlanGimnasio: '',
+
+  // Link de la demo de Gym App (botones "Probar demo")
+  demoGymApp: 'https://gymapp-demo.vercel.app/',
 
   // Dirección actual del sitio. Cuando tengas el dominio .com,
   // hay que cambiarla acá y en las etiquetas <meta> de cada página.

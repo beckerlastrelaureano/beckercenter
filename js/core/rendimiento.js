@@ -35,6 +35,17 @@ window.BC_PERF = (function () {
 
   document.documentElement.dataset.nivel = nivel;
 
+  // Telón con el logo al llegar desde otra página del sitio (lo activa main.js al salir)
+  try {
+    if (sessionStorage.getItem('bc-telon')) {
+      sessionStorage.removeItem('bc-telon');
+      if (!reducir) {
+        document.documentElement.classList.add('telon-in');
+        setTimeout(() => document.documentElement.classList.remove('telon-in'), 1000);
+      }
+    }
+  } catch (e) {}
+
   return {
     nivel,
     // reducir: sin animaciones de scroll ni scroll suave

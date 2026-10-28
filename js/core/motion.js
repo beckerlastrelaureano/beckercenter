@@ -60,10 +60,20 @@
   });
 
   /* ---------- 4. Grupos de tarjetas desde el fondo ---------- */
-  gsap.utils.toArray('.train, .bento, .app-grid, .plans, .stats, .steps, .showcase, .wheel-wrap, .faq, .flow, .about-text').forEach(el => {
+  gsap.utils.toArray('.train, .bento, .app-grid, .plans, .stats, .steps, .showcase, .wheel-wrap, .faq, .flow, .about-text, .compare, .demo-video').forEach(el => {
     gsap.fromTo(el,
       { rotateX: 16, y: 90, scale: 0.9, transformPerspective: 1100, transformOrigin: '50% 0%' },
       { rotateX: 0, y: 0, scale: 1, ease: 'none', scrollTrigger: { trigger: el, start: 'top 98%', end: 'top 45%', scrub: true } });
+  });
+
+  /* ---------- 4b. Saltos entre secciones ---------- */
+  // Cada sección entra como una "ventana" que se abre: bordes redondeados
+  // y recortada, hasta ocupar toda la pantalla.
+  gsap.utils.toArray('main > .section:not(.is-sticky), main > .gx-closing').forEach(sec => {
+    gsap.fromTo(sec,
+      { clipPath: 'inset(7% 4% 0% 4% round 36px)' },
+      { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none',
+        scrollTrigger: { trigger: sec, start: 'top bottom', end: 'top 30%', scrub: true } });
   });
 
   /* ---------- 5. Parallax y cintas gigantes ---------- */

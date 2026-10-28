@@ -130,16 +130,23 @@
   }
 
   function tarjeta(l, i) {
-    const portada = l.portada
+    const tapa = l.portada
       ? `<img src="${esc(l.portada)}" alt="Tapa de ${esc(l.titulo)}" loading="lazy" decoding="async" width="300" height="450">`
       : `<div class="cover-fallback"><span>${esc(l.titulo)}</span></div>`;
+    // Libro en 3D: tapa (se abre al tocar), primera hoja, hojas, lomo y contratapa
+    const portada = `
+      <div class="b3-vaiven"><div class="book3d">
+        <div class="b3-back"></div><div class="b3-pages"></div><div class="b3-spine"></div>
+        <div class="b3-hoja"></div>
+        <div class="b3-front">${tapa}</div>
+      </div></div>`;
     const estado = l.estado === 'disponible'
       ? '<span class="badge is-stock">En stock</span>'
       : '<span class="badge">Por encargo</span>';
     return `
       <article class="card book tilt" data-tilt="6" data-id="${l.id}" style="--i:${i % POR_PAGINA}">
         <span class="glare" aria-hidden="true"></span>
-        <div class="book-cover">${portada}</div>
+        <div class="book-cover b3">${portada}</div>
         <div class="book-body">
           <div class="book-tags">${estado}${l.tapaDura ? '<span class="badge is-soft">Tapa dura</span>' : ''}</div>
           <h3>${esc(l.titulo)}</h3>

@@ -3,26 +3,26 @@
     {
       "id": "gym-app",
       "nombre": "Gym App",
-      "subtitulo": "Entrená · Registrá · Progresá",
+      "subtitulo": "Gestión para gimnasios y trainers",
       "estado": "disponible",
       "destacada": true,
-      "tipo": "App de entrenamiento",
-      "resumen": "Tus rutinas, tus marcas y tu evolución en el celular. Registrás cada serie y la app te muestra cómo progresás.",
-      "paraQuien": ["Alumnos", "Entrenadores", "Gimnasios"],
+      "tipo": "Sistema de gestión",
+      "resumen": "Tu gimnasio organizado en una app: rutinas asignadas, alumnos con su ficha, cuotas al día y asistencia.",
+      "paraQuien": ["Gimnasios", "Personal trainers", "Alumnos"],
       "funciones": [
-        "Rutinas según tu objetivo y nivel",
-        "353 ejercicios con foto y técnica",
-        "Cronómetro de descanso automático",
-        "Récords, gráficos y estadísticas",
-        "7 calculadoras: 1RM, IMC, discos y más",
-        "Se instala en el celular y funciona sin internet"
+        "Carga y asignación de rutinas",
+        "Ficha de cada alumno",
+        "Control de cuotas: al día y deudores",
+        "Asistencia y progreso del mes",
+        "Acceso de alumnos con su DNI",
+        "Rutina descargable en PDF"
       ],
       "capturas": [
-        "img/apps/gymapp-inicio.jpg",
-        "img/apps/gymapp-ejercicios.jpg",
-        "img/apps/gymapp-calculadoras.jpg"
+        "img/apps/gym-alumno.jpg",
+        "img/apps/gym-rutina.jpg",
+        "img/apps/gym-acceso.jpg"
       ],
-      "probar": "https://beckerlastrelaureano.github.io/gymtracker/",
+      "probar": "https://gymapp-demo.vercel.app/",
       "pagina": "gym-app.html",
       "mensaje": "Hola Becker, quiero información sobre Gym App."
     },

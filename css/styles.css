@@ -106,8 +106,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   clip: rect(0 0 0 0); white-space: nowrap;
 }
 
-/* Transición suave entre páginas (Chrome / Android) */
-@view-transition { navigation: auto; }
+/* La transición entre páginas la hace el telón con el logo (sección 20) */
 
 
 /* ---------- 3. LOGO Y MARCA ---------- */
@@ -1786,6 +1785,146 @@ main { overflow-x: clip; }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
+
+
+/* ---------- 18. GYM APP: funciones, video y tabla ---------- */
+.features { padding-block: 72px; }
+.features-grid { display: grid; gap: 36px; align-items: center; }
+@media (min-width: 860px) { .features-grid { grid-template-columns: 5fr 6fr; gap: 64px; } }
+/* La perspectiva va dentro del giro (js/gym-app.js): con perspective en el padre
+   algunos navegadores dibujan la pantalla del celular en negro */
+.features-phone { display: grid; justify-items: center; }
+.phone-3d { width: min(58vw, 280px); will-change: transform; }
+.features-text { perspective: 900px; }
+.features-text article { padding: 20px 0; border-top: 1px solid var(--line); }
+.features-text b { font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: .2em; color: var(--teal-hi); }
+.features-text h3 { margin: 8px 0 6px; font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 6vw, 34px); line-height: 1.1; letter-spacing: -.02em; }
+.features-text p { margin: 0; color: var(--muted); }
+.features-dots { display: none; }
+/* Con animaciones: una función por vez mientras el celular gira */
+.features.is-steps { height: 420svh; padding-block: 0; }
+.is-steps .features-grid { gap: 18px; }
+.is-steps .phone-3d { width: min(42vw, 270px); }
+.is-steps .features-text { position: relative; min-height: 210px; }
+.is-steps .features-text article {
+  position: absolute; left: 0; right: 0; top: 36px;
+  border-top: 0; padding: 0;
+  opacity: 0;
+  transform: translateY(40px) rotateX(-50deg);
+  transform-origin: 50% 100%;
+  transition: opacity .55s var(--ease), transform .7s var(--ease);
+}
+.is-steps .features-text article.is-on { opacity: 1; transform: none; }
+.is-steps .features-dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+.features-dots i { width: 6px; height: 6px; border-radius: 999px; background: var(--line-strong); transition: width .4s var(--ease), background-color .4s; }
+.features-dots i.is-on { width: 24px; background: var(--teal-hi); }
+@media (min-width: 860px) { .is-steps .phone-3d { width: 280px; } .is-steps .features-text { min-height: 260px; } }
+
+.video-grid { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 860px) { .video-grid { grid-template-columns: 1fr 1fr; gap: 64px; } }
+.video-steps { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 10px; counter-reset: paso; }
+.video-steps li {
+  counter-increment: paso;
+  display: flex; gap: 12px; align-items: center;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  transition: color .4s, border-color .4s, background-color .4s, transform .4s var(--ease);
+}
+.video-steps li::before { content: counter(paso, decimal-leading-zero); font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: .14em; color: var(--teal-hi); }
+.video-steps li.is-on { color: var(--text); border-color: var(--teal); background: color-mix(in srgb, var(--teal) 12%, transparent); transform: translateX(6px); }
+.demo-video .phone { width: min(62vw, 280px); }
+.demo-video .dv-shot.is-on { animation: acercar 3.2s ease-out both; }
+@keyframes acercar { from { transform: scale(1.07); } to { transform: scale(1); } }
+.dv-tap {
+  position: absolute; z-index: 4;
+  width: 36px; height: 36px; margin: -18px 0 0 -18px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.3);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 8px rgba(127,169,167,.25);
+  opacity: 0;
+  transform: scale(1.6);
+  transition: left .6s var(--ease), top .6s var(--ease), opacity .3s, transform .3s;
+  pointer-events: none;
+}
+.dv-tap.is-tap { opacity: 1; transform: scale(.8); }
+.dv-bar { display: flex; align-items: center; gap: 12px; width: min(62vw, 280px); margin: 18px auto 0; }
+.dv-play { width: 40px; height: 40px; flex: none; border-radius: 50%; border: 1px solid var(--line-strong); display: grid; place-items: center; }
+.dv-play svg { width: 16px; height: 16px; fill: currentColor; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+.dv-play .i-play, .is-paused .dv-play .i-pause { display: none; }
+.is-paused .dv-play .i-play { display: block; }
+.dv-progress { flex: 1; height: 3px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.dv-progress i { display: block; height: 100%; background: var(--teal-hi); transform: scaleX(0); transform-origin: left; }
+
+.plan-note { margin: 6px 0 24px; color: var(--muted); font-size: 15px; }
+.compare { margin-top: 32px; max-width: 900px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.compare table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.compare th, .compare td { padding: 13px 12px; text-align: center; border-bottom: 1px solid var(--line); }
+.compare thead th { font-family: var(--font-display); font-size: 10.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); background: var(--surface); }
+.compare tbody th { text-align: left; font-weight: 400; }
+.compare td { width: 27%; color: var(--teal-hi); font-weight: 600; }
+.compare tbody tr:last-child > * { border-bottom: 0; }
+.compare tbody tr { transition: background-color .2s; }
+.compare tbody tr:hover { background: var(--surface); }
+
+
+/* ---------- 19. LIBROS EN 3D (tapa, lomo y hojas) ---------- */
+.book-cover.b3 { overflow: visible; background: none; box-shadow: none; border-radius: 0; perspective: 700px; }
+/* will-change: necesario para que Chrome dibuje la foto de la tapa dentro del 3D */
+.b3-vaiven { width: 100%; height: 100%; transform-style: preserve-3d; will-change: transform; animation: libro-vaiven 6s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -.45s); }
+@keyframes libro-vaiven { 50% { transform: rotateY(9deg) translateY(-3px); } }
+.book3d {
+  --t: 14px;                       /* grosor del libro */
+  position: relative; width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateY(-24deg) rotateX(4deg);
+  transition: transform .8s var(--ease);
+}
+.book3d > * { position: absolute; }
+.b3-front {
+  inset: 0; z-index: 2;
+  transform-origin: 0 50%;
+  /* El pequeño giro evita un error de Chrome que deja la foto sin dibujar */
+  transform: translateZ(calc(var(--t) / 2)) rotateY(-1deg);
+  /* Sin overflow:hidden: dentro de un 3D algunos navegadores no dibujan la foto */
+  border-radius: 2px 6px 6px 2px;
+  background: linear-gradient(160deg, #3f6464, #1d2e2e);   /* se ve mientras carga la foto */
+  box-shadow: 0 14px 26px -12px rgba(0,0,0,.6);
+  transition: transform .8s var(--ease);
+}
+.b3-front img, .b3-front .cover-fallback { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+.b3-front::after {   /* sombra del lomo sobre la tapa */
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 8px;
+  background: linear-gradient(90deg, rgba(0,0,0,.35), transparent);
+}
+.b3-hoja {   /* primera página, se ve al abrir la tapa */
+  inset: 3px 3px 3px 0;
+  transform: translateZ(calc(var(--t) / 2 - 4px));
+  background:
+    repeating-linear-gradient(transparent 0 9px, rgba(63,100,100,.25) 9px 10px) 14px 18px / calc(100% - 28px) 70% no-repeat,
+    #f3f2ec;
+  border-radius: 0 4px 4px 0;
+}
+.b3-back { inset: 0; transform: rotateY(180deg) translateZ(calc(var(--t) / 2)); background: #1d2626; border-radius: 6px 2px 2px 6px; }
+.b3-spine { top: 0; bottom: 0; left: 0; width: var(--t); transform: rotateY(-90deg) translateZ(calc(var(--t) / 2)); background: linear-gradient(90deg, #1d2a2a, #4c7474, #1d2a2a); }
+.b3-pages { top: 3px; bottom: 3px; right: 0; width: var(--t); transform: rotateY(90deg) translateZ(calc(var(--t) / 2 - 2px)); background: repeating-linear-gradient(90deg, #f1f1ec 0 2px, #d6d8d1 2px 3px); }
+/* Al tocar o pasar el mouse: el libro gira y la tapa se abre */
+.book:hover .book3d, .book:focus-within .book3d, .book.is-tilting .book3d, .book:active .book3d { transform: rotateY(-34deg) rotateX(6deg) translateZ(12px); }
+.book:hover .b3-front, .book:focus-within .b3-front, .book.is-tilting .b3-front, .book:active .b3-front { transform: translateZ(calc(var(--t) / 2 + 2px)) rotateY(-38deg); }
+
+/* ---------- 20. SALTOS ENTRE PÁGINAS (telón con el logo) ---------- */
+html.telon-in body::after, html.telon-out body::after {
+  content: "";
+  position: fixed; inset: 0; z-index: 300;
+  pointer-events: none;
+  background: var(--bg) url("../img/favicon.svg") center / 64px no-repeat;
+}
+html.telon-in body::after { animation: telon-sale .8s .05s cubic-bezier(.7, 0, .2, 1) forwards; }
+html.telon-out body::after { animation: telon-entra .45s cubic-bezier(.7, 0, .2, 1) forwards; }
+@keyframes telon-sale { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
+@keyframes telon-entra { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
 
 
 /* ---------- 10. ANIMACIONES ---------- */

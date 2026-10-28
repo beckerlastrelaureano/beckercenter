@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
   <!-- ===== SEO ===== -->
-  <title>Gym App | Registrá tus entrenamientos y mirá tu progreso</title>
-  <meta name="description" content="Gym App: rutinas según tu objetivo, 353 ejercicios con técnica, cronómetro, récords y estadísticas. Se instala en el celular y funciona sin internet. Probala gratis.">
+  <title>Gym App | Sistema de gestión para gimnasios y personal trainers</title>
+  <meta name="description" content="Gym App: rutinas asignadas, alumnos con su ficha, control de cuotas y asistencia en una sola app. Para gimnasios y personal trainers. Probá la demo.">
   <link rel="canonical" href="https://beckerlastrelaureano.github.io/beckercenter/gym-app.html">
   <meta name="theme-color" content="#050607">
 
@@ -14,8 +14,8 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_AR">
   <meta property="og:site_name" content="Becker Center">
-  <meta property="og:title" content="Gym App — Donde tu esfuerzo se convierte en progreso.">
-  <meta property="og:description" content="Rutinas, ejercicios, cronómetro y estadísticas en tu celular. Probala gratis.">
+  <meta property="og:title" content="Gym App — Tu gimnasio organizado en una app">
+  <meta property="og:description" content="Rutinas, alumnos, cuotas y asistencia para gimnasios y personal trainers. Probá la demo.">
   <meta property="og:url" content="https://beckerlastrelaureano.github.io/beckercenter/gym-app.html">
   <meta property="og:image" content="https://beckerlastrelaureano.github.io/beckercenter/img/og/og-gymapp.jpg">
   <meta property="og:image:width" content="1200">
@@ -25,22 +25,13 @@
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 
   <!-- Detecta si el celular aguanta 3D (va primero) -->
-  <script src="js/core/rendimiento.js?v=6"></script>
-
-  <!-- Dirección de Three.js (librería 3D) en el CDN -->
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
-    }
-  }
-  </script>  <script>try{var t=localStorage.getItem('bc-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <script src="js/core/rendimiento.js?v=7"></script>
+  <script>try{var t=localStorage.getItem('bc-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Montserrat:wght@300;400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="css/styles.css?v=10">
+  <link rel="stylesheet" href="css/styles.css?v=17">
 
   <!-- Datos para Google: qué es la app -->
   <script type="application/ld+json">
@@ -48,9 +39,9 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "Gym App",
-    "applicationCategory": "HealthApplication",
+    "applicationCategory": "BusinessApplication",
     "operatingSystem": "Android, iOS, Web",
-    "url": "https://beckerlastrelaureano.github.io/gymtracker/",
+    "url": "https://gymapp-demo.vercel.app/",
     "author": { "@type": "Person", "name": "Becker" }
   }
   </script>
@@ -85,37 +76,36 @@
 
   <main>
 
-    <!-- ================= HERO con fondo líquido (tocá la pantalla) ================= -->
+    <!-- ================= HERO ================= -->
     <section class="gx-hero">
       <canvas class="fx-canvas fx-liquid" data-fx="liquid" aria-hidden="true"></canvas>
       <div class="gx-grid" aria-hidden="true"></div>
 
       <div class="wrap gx-hero-inner">
         <div class="gx-hero-text">
-          <span class="live-chip"><i></i> Disponible · Android · iPhone</span>
+          <span class="live-chip"><i></i> Gimnasios · Personal trainers</span>
 
           <!-- TEXTO EDITABLE: título principal -->
-          <h1 class="gx-title" data-split>Donde tu esfuerzo se convierte en <em class="shiny">progreso.</em></h1>
+          <h1 class="gx-title" data-split>Tu gimnasio <em class="shiny">organizado</em> en una app.</h1>
 
-          <p class="lead gx-lead">Tus rutinas, tus series y tus marcas en el celular. Entrenás, registrás y la app te muestra cuánto avanzaste.</p>
+          <p class="lead gx-lead">Rutinas asignadas, alumnos con su ficha, cuotas al día y asistencia. Tus alumnos entran con su DNI y ven la rutina del día en el celular.</p>
 
           <div class="hero-cta gx-cta">
-            <!-- Link para probar la app: cambialo si la app cambia de dirección -->
-            <a class="btn btn-primary btn-glow" data-magnet href="https://beckerlastrelaureano.github.io/gymtracker/" target="_blank" rel="noopener">
-              Probar gratis
+            <!-- El link de la demo se cambia en js/config.js (demoGymApp) -->
+            <a class="btn btn-primary btn-glow" data-magnet data-demo href="https://gymapp-demo.vercel.app/" target="_blank" rel="noopener">
+              Probar demo
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
             </a>
-            <a class="btn" data-magnet href="#planes">Ver plan</a>
+            <a class="btn" data-magnet href="#video">Ver video</a>
           </div>
         </div>
 
-        <!-- Celular que se inclina al tocarlo, con avisos flotando alrededor -->
         <div class="gx-hero-media">
           <div class="phone tilt" data-phone data-tilt="14">
             <div class="phone-screen">
-              <img src="img/apps/gymapp-inicio.jpg" alt="Gym App: elegí tu objetivo" class="is-on" width="375" height="812">
-              <img src="img/apps/gymapp-ejercicios.jpg" alt="Gym App: buscador de ejercicios" loading="lazy" width="375" height="812">
-              <img src="img/apps/gymapp-calculadoras.jpg" alt="Gym App: calculadora de 1RM" loading="lazy" width="375" height="812">
+              <img src="img/apps/gym-alumno.jpg" alt="Gym App: inicio del alumno con su rutina y su cuota" class="is-on" width="375" height="812">
+              <img src="img/apps/gym-rutina.jpg" alt="Gym App: rutina del día con series, peso y repeticiones" loading="lazy" width="375" height="812">
+              <img src="img/apps/gym-acceso.jpg" alt="Gym App: acceso con DNI para alumnos, profes y clases" loading="lazy" width="375" height="812">
               <span class="glare" aria-hidden="true"></span>
             </div>
             <div class="phone-dots"><span class="is-on"></span><span></span><span></span></div>
@@ -123,16 +113,16 @@
 
           <!-- Avisos de ejemplo (decorativos) -->
           <div class="float-chip fc-1" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>
-            <div><b>Nuevo récord</b><small>Sentadilla · 100 kg</small></div>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+            <div><b>Cuota al día</b><small>Vence el 28/11</small></div>
           </div>
           <div class="float-chip fc-2" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 2v3M9 2h6M12 13l3-3"/></svg>
-            <div><b data-rest-timer>01:30</b><small>Descanso</small></div>
+            <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>
+            <div><b>16 días</b><small>Asistencia del mes</small></div>
           </div>
           <div class="float-chip fc-3" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/></svg>
-            <div><b>Racha de 12 días</b><small>Seguí así</small></div>
+            <svg viewBox="0 0 24 24"><path d="M3 9v6M6 6v12M18 6v12M21 9v6M6 12h12"/></svg>
+            <div><b>Día 1 · Hipertrofia</b><small>Te toca hoy</small></div>
           </div>
         </div>
       </div>
@@ -144,139 +134,84 @@
     <!-- ================= CINTAS GIGANTES ================= -->
     <div class="mega-marquee" aria-hidden="true">
       <div class="mm-row"><div class="mm-track">
-        <span>Ganancia muscular</span><span class="outline">Fuerza</span><span>Pérdida de grasa</span><span class="outline">Cardio</span><span>Movilidad</span>
-        <span>Ganancia muscular</span><span class="outline">Fuerza</span><span>Pérdida de grasa</span><span class="outline">Cardio</span><span>Movilidad</span>
+        <span>Rutinas</span><span class="outline">Alumnos</span><span>Cuotas</span><span class="outline">Asistencia</span><span>Progreso</span>
+        <span>Rutinas</span><span class="outline">Alumnos</span><span>Cuotas</span><span class="outline">Asistencia</span><span>Progreso</span>
       </div></div>
       <div class="mm-row is-reverse"><div class="mm-track">
-        <span class="outline">Entrená</span><span>Registrá</span><span class="outline">Progresá</span><span>Repetí</span>
-        <span class="outline">Entrená</span><span>Registrá</span><span class="outline">Progresá</span><span>Repetí</span>
+        <span class="outline">Gimnasios</span><span>Personal trainers</span><span class="outline">Alumnos</span><span>Profes</span>
+        <span class="outline">Gimnasios</span><span>Personal trainers</span><span class="outline">Alumnos</span><span>Profes</span>
       </div></div>
     </div>
 
 
-    <!-- ================= NÚMEROS ================= -->
-    <section class="wrap stats gx-stats" data-stagger aria-label="Gym App en números">
-      <div><b data-count-to="353">353</b><span>ejercicios con técnica</span></div>
-      <div><b data-count-to="6">6</b><span>objetivos de entrenamiento</span></div>
-      <div><b data-count-to="7">7</b><span>calculadoras</span></div>
-      <div><b>0</b><span>internet necesario una vez instalada</span></div>
-    </section>
-
-
-    <!-- ================= RUEDA DE OBJETIVOS ================= -->
-    <section class="section">
-      <div class="wrap">
-        <div data-reveal>
-          <p class="eyebrow">Elegí tu objetivo</p>
-          <h2 class="h2" data-split>La app arma tu rutina <em>según tu meta.</em></h2>
-          <p class="lead">Deslizá la rueda o tocá un objetivo.</p>
-        </div>
-
-        <!-- TEXTO EDITABLE: cada <li> es un objetivo. data-dias y data-texto se muestran al lado -->
-        <div class="wheel-wrap" data-reveal>
-          <div class="wheel" data-wheel tabindex="0" aria-label="Objetivos. Usá las flechas para cambiar.">
-            <ul class="wheel-drum" data-wheel-drum>
-              <li data-dias="5 días por semana" data-texto="Más volumen y series por grupo muscular para ganar masa de forma progresiva.">Ganancia muscular</li>
-              <li data-dias="3 días por semana" data-texto="Pocas repeticiones con cargas altas y descansos largos para ser más fuerte.">Fuerza</li>
-              <li data-dias="4 días por semana" data-texto="Circuitos y trabajo metabólico que suman gasto calórico sin perder músculo.">Pérdida de grasa</li>
-              <li data-dias="3 días por semana" data-texto="Resistencia aeróbica con progresión de tiempo e intensidad.">Cardio</li>
-              <li data-dias="3 días por semana" data-texto="Elongación y movilidad articular para moverte mejor y prevenir lesiones.">Movilidad</li>
-              <li data-dias="A tu ritmo" data-texto="Armás tu propia rutina con los ejercicios que quieras.">Libre</li>
-            </ul>
-            <span class="wheel-lens" aria-hidden="true"></span>
-          </div>
-          <div class="wheel-info" aria-live="polite">
-            <span class="badge is-stock" data-wheel-dias>5 días por semana</span>
-            <h3 data-wheel-titulo>Ganancia muscular</h3>
-            <p data-wheel-texto>Más volumen y series por grupo muscular para ganar masa de forma progresiva.</p>
-            <div class="wheel-nav">
-              <button type="button" class="icon-btn" data-wheel-prev aria-label="Objetivo anterior"><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></button>
-              <button type="button" class="icon-btn" data-wheel-next aria-label="Objetivo siguiente"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+    <!-- ================= FUNCIONES: el celular gira y cambia de pantalla al bajar ================= -->
+    <!-- TEXTO EDITABLE: cada <article> es una función. data-pantalla = imagen que muestra el celular,
+         data-foco = qué parte de la imagen se ve (top, center o bottom) -->
+    <section class="features" id="funciones" data-features>
+      <div class="sticky-box">
+        <div class="wrap features-grid">
+          <div class="features-phone">
+            <div class="phone phone-3d" data-feature-phone>
+              <div class="phone-screen">
+                <img src="img/apps/gym-rutina.jpg" alt="" class="is-on" data-feature-img width="375" height="812">
+              </div>
             </div>
           </div>
+          <div class="features-text">
+            <p class="eyebrow">Funciones</p>
+            <article data-pantalla="img/apps/gym-rutina.jpg" data-foco="top">
+              <b>01</b><h3>Carga y asignación de rutinas</h3>
+              <p>Armás la rutina una vez y se la asignás a cada alumno: días, ejercicios, series, peso, repeticiones y descanso.</p>
+            </article>
+            <article data-pantalla="img/apps/gym-alumno.jpg" data-foco="top">
+              <b>02</b><h3>Alumnos con su ficha</h3>
+              <p>Cada alumno tiene su ficha con su plan, su rutina y su historial. Entra con su DNI, sin contraseñas.</p>
+            </article>
+            <article data-pantalla="img/apps/gym-alumno.jpg" data-foco="top">
+              <b>03</b><h3>Control de cuotas</h3>
+              <p>Sabés quién está al día y quién debe. El alumno ve cuándo le vence la cuota apenas abre la app.</p>
+            </article>
+            <article data-pantalla="img/apps/gym-alumno.jpg" data-foco="bottom">
+              <b>04</b><h3>Asistencia y progreso</h3>
+              <p>Días entrenados en el mes, total y última visita. Ves quién viene y quién está dejando.</p>
+            </article>
+          </div>
         </div>
+        <div class="features-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
       </div>
     </section>
 
 
-    <!-- ================= BENEFICIOS (mosaico) ================= -->
-    <section class="section" style="padding-top:16px">
-      <div class="wrap">
+    <!-- ================= VIDEO DE LA APP ================= -->
+    <!-- Cuando tengas una grabación real del celular, guardala como img/video/gym-app.mp4
+         y reemplazá el <div class="demo-video" ...> por:
+         <video class="demo-real" src="img/video/gym-app.mp4" autoplay muted loop playsinline></video> -->
+    <section class="section" id="video">
+      <div class="wrap video-grid">
         <div data-reveal>
-          <p class="eyebrow">Beneficios</p>
-          <h2 class="h2" data-split>Todo lo que necesitás <em>para progresar.</em></h2>
+          <p class="eyebrow">La app en acción</p>
+          <h2 class="h2" data-split>Así lo usa <em>tu alumno.</em></h2>
+          <p class="lead">Entra con su DNI, ve qué día le toca y registra cada serie. Todo en menos de un minuto.</p>
+          <ol class="video-steps" data-video-steps>
+            <li class="is-on">Entra con su DNI</li>
+            <li>Ve su cuota y su rutina del día</li>
+            <li>Registra peso y repeticiones</li>
+          </ol>
         </div>
-
-        <!-- TEXTO EDITABLE: cada tarjeta es un beneficio -->
-        <div class="bento" data-stagger>
-          <div class="card benefit tilt b-wide" data-tilt="6">
-            <span class="glare" aria-hidden="true"></span>
-            <svg viewBox="0 0 24 24"><path d="M3 9v6M6 6v12M18 6v12M21 9v6"/><path class="accent" d="M6 12h12"/></svg>
-            <h3>353 ejercicios explicados</h3>
-            <p>Con foto, músculos que trabaja, errores frecuentes y consejos de ejecución.</p>
-            <div class="mini-tags"><span>Pecho</span><span>Espalda</span><span>Piernas</span><span>Hombros</span><span>Core</span><span>+16</span></div>
+        <div class="demo-video" data-video data-reveal>
+          <div class="phone">
+            <div class="phone-screen">
+              <img src="img/apps/gym-acceso.jpg" alt="" class="dv-shot is-on" width="375" height="812">
+              <img src="img/apps/gym-alumno.jpg" alt="" class="dv-shot" loading="lazy" width="375" height="812">
+              <img src="img/apps/gym-rutina.jpg" alt="" class="dv-shot" loading="lazy" width="375" height="812">
+              <span class="dv-tap" aria-hidden="true"></span>
+            </div>
           </div>
-          <div class="card benefit tilt" data-tilt="8">
-            <span class="glare" aria-hidden="true"></span>
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 2v3M9 2h6"/><path class="accent" d="M12 13l3-3"/></svg>
-            <h3>Descanso automático</h3>
-            <p>Completás una serie y el cronómetro arranca solo.</p>
-          </div>
-          <div class="card benefit tilt" data-tilt="8">
-            <span class="glare" aria-hidden="true"></span>
-            <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8"/><path class="accent" d="M8 12h2M14 12h2M8 16h2M14 16h2"/></svg>
-            <h3>7 calculadoras</h3>
-            <p>1RM, IMC, % de grasa, volumen, barra, porcentajes y discos.</p>
-          </div>
-          <div class="card benefit tilt b-wide" data-tilt="6">
-            <span class="glare" aria-hidden="true"></span>
-            <svg viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M6 16v-4M11 16V8M16 16v-6"/><path class="accent" d="M4 9l6-4 5 3 5-4"/></svg>
-            <h3>Progreso visible</h3>
-            <p>Récords, gráficos de peso y volumen, rachas y comparación con el mes anterior.</p>
-            <!-- Gráfico decorativo que se dibuja al aparecer -->
-            <svg class="spark" viewBox="0 0 300 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 62 L40 55 L80 58 L120 44 L160 46 L200 30 L240 26 L300 8"/></svg>
-          </div>
-          <div class="card benefit tilt" data-tilt="8">
-            <span class="glare" aria-hidden="true"></span>
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle class="accent" cx="12" cy="12" r="1.5"/></svg>
-            <h3>Te avisa si te estancás</h3>
-            <p>Detecta récords, progresos y estancamientos, y te sugiere qué ajustar.</p>
-          </div>
-          <div class="card benefit tilt" data-tilt="8">
-            <span class="glare" aria-hidden="true"></span>
-            <svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path class="accent" d="M12 8v6M9.5 11.5L12 14l2.5-2.5"/></svg>
-            <h3>Se instala como app</h3>
-            <p>Queda en tu pantalla y funciona sin conexión.</p>
-          </div>
+          <div class="dv-bar"><button type="button" class="dv-play" data-video-play aria-label="Pausar video">
+            <svg viewBox="0 0 24 24" class="i-pause"><path d="M8 5v14M16 5v14"/></svg>
+            <svg viewBox="0 0 24 24" class="i-play"><path d="M7 4l13 8-13 8z"/></svg>
+          </button><span class="dv-progress"><i data-video-progress></i></span></div>
         </div>
-      </div>
-    </section>
-
-
-    <!-- ================= CÓMO FUNCIONA (la línea se llena al bajar) ================= -->
-    <section class="section" style="padding-top:16px">
-      <div class="wrap">
-        <div data-reveal>
-          <p class="eyebrow">Cómo funciona</p>
-          <h2 class="h2" data-split>Tres pasos. <em>Cero vueltas.</em></h2>
-        </div>
-        <ol class="how gx-how" data-progress>
-          <li data-reveal>
-            <b>01</b>
-            <h3>Elegí tu objetivo</h3>
-            <p>La app arma una rutina para tu meta y tu nivel. También podés crear la tuya.</p>
-          </li>
-          <li data-reveal>
-            <b>02</b>
-            <h3>Entrená y registrá</h3>
-            <p>Marcás cada serie con su peso y repeticiones. El descanso se cronometra solo.</p>
-          </li>
-          <li data-reveal>
-            <b>03</b>
-            <h3>Mirá tu progreso</h3>
-            <p>Cada sesión queda guardada. Ves tus récords y la app te avisa si estás estancado.</p>
-          </li>
-        </ol>
       </div>
     </section>
 
@@ -286,15 +221,15 @@
       <div class="wrap">
         <div data-reveal>
           <p class="eyebrow">Por dentro</p>
-          <h2 class="h2" data-split>Así se ve <em>en tu celular.</em></h2>
+          <h2 class="h2" data-split>Así se ve <em>en el celular.</em></h2>
           <p class="lead">Deslizá para ver más pantallas.</p>
         </div>
       </div>
       <!-- Para sumar una captura, copiá un <figure> y cambiá la imagen y el texto -->
       <div class="flow" data-flow data-reveal>
-        <figure><img src="img/apps/gymapp-inicio.jpg" alt="Pantalla de inicio de Gym App" loading="lazy" width="375" height="812" draggable="false"><figcaption>Elegí tu objetivo</figcaption></figure>
-        <figure><img src="img/apps/gymapp-ejercicios.jpg" alt="Buscador de ejercicios de Gym App" loading="lazy" width="375" height="812" draggable="false"><figcaption>Buscá entre 353 ejercicios</figcaption></figure>
-        <figure><img src="img/apps/gymapp-calculadoras.jpg" alt="Calculadora de 1RM de Gym App" loading="lazy" width="375" height="812" draggable="false"><figcaption>Calculá tu 1RM</figcaption></figure>
+        <figure><img src="img/apps/gym-alumno.jpg" alt="Inicio del alumno" loading="lazy" width="375" height="812" draggable="false"><figcaption>Inicio del alumno</figcaption></figure>
+        <figure><img src="img/apps/gym-rutina.jpg" alt="Rutina del día" loading="lazy" width="375" height="812" draggable="false"><figcaption>Rutina del día</figcaption></figure>
+        <figure><img src="img/apps/gym-acceso.jpg" alt="Acceso con DNI" loading="lazy" width="375" height="812" draggable="false"><figcaption>Acceso con DNI</figcaption></figure>
       </div>
       <div class="flow-dots" data-flow-dots></div>
     </section>
@@ -311,34 +246,34 @@
         <div class="audience" data-reveal>
           <div class="tabs gx-tabs" role="tablist" aria-label="Para quién es">
             <span class="tabs-pill" aria-hidden="true"></span>
-            <button type="button" role="tab" aria-selected="true" aria-controls="tab-alumnos" id="t-alumnos">Alumnos</button>
-            <button type="button" role="tab" aria-selected="false" aria-controls="tab-entrenadores" id="t-entrenadores">Entrenadores</button>
-            <button type="button" role="tab" aria-selected="false" aria-controls="tab-gimnasios" id="t-gimnasios">Gimnasios</button>
+            <button type="button" role="tab" aria-selected="true" aria-controls="tab-gimnasios" id="t-gimnasios">Gimnasios</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="tab-trainers" id="t-trainers">Trainers</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="tab-alumnos" id="t-alumnos">Alumnos</button>
           </div>
 
           <!-- TEXTO EDITABLE: contenido de cada pestaña -->
-          <div class="tab-panel" role="tabpanel" id="tab-alumnos" aria-labelledby="t-alumnos">
-            <h3>Entrenás con un plan y ves tus resultados.</h3>
+          <div class="tab-panel" role="tabpanel" id="tab-gimnasios" aria-labelledby="t-gimnasios">
+            <h3>Todo el gimnasio en un solo lugar.</h3>
             <ul class="check-list">
-              <li>Sabés qué hacer cada día al llegar al gimnasio</li>
-              <li>Registrás tus series en segundos</li>
-              <li>Ves tus récords y tu evolución con gráficos</li>
+              <li>Alumnos, profes y clases con la marca de tu gimnasio</li>
+              <li>Cuotas al día y deudores de un vistazo</li>
+              <li>Asistencia del mes para saber quién está dejando</li>
             </ul>
           </div>
-          <div class="tab-panel" role="tabpanel" id="tab-entrenadores" aria-labelledby="t-entrenadores" hidden>
-            <h3>Tus alumnos llegan con su registro hecho.</h3>
+          <div class="tab-panel" role="tabpanel" id="tab-trainers" aria-labelledby="t-trainers" hidden>
+            <h3>Tus alumnos con su plan, sin planillas.</h3>
             <ul class="check-list">
-              <li>Cada alumno registra sus sesiones en su celular</li>
-              <li>Te comparten su informe en PDF con récords y resumen</li>
-              <li>Ajustás el plan con datos reales, no con memoria</li>
+              <li>Cargás la rutina y se la asignás a cada alumno</li>
+              <li>Ves quién pagó y quién entrenó esta semana</li>
+              <li>Te ves profesional desde el primer día</li>
             </ul>
           </div>
-          <div class="tab-panel" role="tabpanel" id="tab-gimnasios" aria-labelledby="t-gimnasios" hidden>
-            <h3>Un valor agregado para tus socios.</h3>
+          <div class="tab-panel" role="tabpanel" id="tab-alumnos" aria-labelledby="t-alumnos" hidden>
+            <h3>Entrás con tu DNI y entrenás.</h3>
             <ul class="check-list">
-              <li>Una herramienta moderna para retener socios</li>
-              <li>Versión con el logo y los colores de tu gimnasio</li>
-              <li>Sin servidores ni costos técnicos para vos</li>
+              <li>Sabés qué día te toca y qué ejercicios hacer</li>
+              <li>Registrás peso y repeticiones de cada serie</li>
+              <li>Ves tu cuota, tu asistencia y descargás la rutina en PDF</li>
             </ul>
           </div>
         </div>
@@ -347,44 +282,59 @@
 
 
     <!-- ================= PLANES ================= -->
+    <!-- Los precios se cambian en js/config.js (precioPlanTrainer y precioPlanGimnasio) -->
     <section class="section" id="planes" style="padding-top:16px">
       <div class="wrap">
         <div data-reveal>
-          <p class="eyebrow">Plan</p>
-          <h2 class="h2" data-split>Una cuota fija. <em>Todo incluido.</em></h2>
+          <p class="eyebrow">Planes</p>
+          <h2 class="h2" data-split>Una cuota fija por mes. <em>Sin sorpresas.</em></h2>
         </div>
 
         <div class="plans" data-stagger>
-          <!-- Plan mensual: el precio se cambia en js/config.js (precioGymApp) -->
+          <div class="card plan">
+            <span class="tag">Personal Trainer</span>
+            <h3>Plan Personal Trainer</h3>
+            <p class="plan-price"><b data-precio="precioPlanTrainer">Consultá el valor</b><small hidden>/ mes</small></p>
+            <!-- TEXTO EDITABLE -->
+            <p class="plan-note">Para entrenadores que trabajan con sus propios alumnos.</p>
+            <a class="btn" data-wa="Hola Becker, quiero info del Plan Personal Trainer de Gym App.">Pedir info</a>
+          </div>
           <div class="plan-glow">
             <div class="card plan is-main">
-              <span class="tag">Mensual</span>
-              <h3>Gym App</h3>
-              <p class="plan-price"><b data-gym-price>Consultá el valor</b><small data-gym-period hidden>/ mes</small></p>
-              <ul class="check-list">
-                <li>Todas las funciones de la app</li>
-                <li>Rutina inicial según tu objetivo</li>
-                <li>Actualizaciones incluidas</li>
-                <li>Soporte directo por WhatsApp</li>
-              </ul>
-              <a class="btn btn-primary" data-wa="Hola Becker, quiero contratar Gym App (plan mensual).">
+              <span class="tag">Gimnasio</span>
+              <h3>Plan Gimnasio</h3>
+              <p class="plan-price"><b data-precio="precioPlanGimnasio">Consultá el valor</b><small hidden>/ mes</small></p>
+              <!-- TEXTO EDITABLE -->
+              <p class="plan-note">Para gimnasios con varios profes, clases y muchos alumnos.</p>
+              <a class="btn btn-primary" data-wa="Hola Becker, quiero info del Plan Gimnasio de Gym App.">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
-                Contratar
+                Pedir info
               </a>
             </div>
           </div>
+        </div>
 
-          <div class="card plan">
-            <span class="tag">A medida</span>
-            <h3>Entrenadores y gimnasios</h3>
-            <p class="plan-price"><b>Presupuesto</b></p>
-            <ul class="check-list">
-              <li>Varios alumnos o socios</li>
-              <li>App con tu marca</li>
-              <li>Acompañamiento en la puesta en marcha</li>
-            </ul>
-            <a class="btn" data-wa="Hola Becker, quiero Gym App para mis alumnos / mi gimnasio.">Pedir presupuesto</a>
-          </div>
+        <!-- TABLA COMPARATIVA — TEXTO EDITABLE
+             En cada fila: nombre de la función y qué tiene cada plan.
+             Usá ✓ si lo tiene, — si no lo tiene, o un texto corto (ej. "Hasta 30"). -->
+        <div class="compare" data-reveal>
+          <table>
+            <thead>
+              <tr><th scope="col">Incluye</th><th scope="col">Personal Trainer</th><th scope="col">Gimnasio</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Rutinas y asignación</th><td>✓</td><td>✓</td></tr>
+              <tr><th scope="row">Ficha de cada alumno</th><td>✓</td><td>✓</td></tr>
+              <tr><th scope="row">Control de cuotas</th><td>✓</td><td>✓</td></tr>
+              <tr><th scope="row">Asistencia y progreso</th><td>✓</td><td>✓</td></tr>
+              <tr><th scope="row">Rutina en PDF</th><td>✓</td><td>✓</td></tr>
+              <tr><th scope="row">Cantidad de alumnos</th><td>A definir</td><td>A definir</td></tr>
+              <tr><th scope="row">Varios profes</th><td>—</td><td>✓</td></tr>
+              <tr><th scope="row">Clases grupales</th><td>—</td><td>✓</td></tr>
+              <tr><th scope="row">Nombre y logo del gimnasio</th><td>—</td><td>✓</td></tr>
+              <tr><th scope="row">Soporte por WhatsApp</th><td>✓</td><td>✓</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -401,28 +351,24 @@
         <!-- TEXTO EDITABLE: copiá un <details> para sumar una pregunta -->
         <div class="faq" data-reveal>
           <details>
-            <summary>¿Tengo que descargarla de una tienda?</summary>
-            <p>No. Abrís el link en el navegador del celular y elegís "Agregar a pantalla de inicio". Queda instalada como cualquier app.</p>
+            <summary>¿Mis alumnos tienen que descargar algo?</summary>
+            <p>No. Abren el link del gimnasio y, si quieren, tocan "Instalar la app" para dejarla en la pantalla del celular.</p>
           </details>
           <details>
-            <summary>¿Funciona en iPhone?</summary>
-            <p>Sí. Funciona en Android, iPhone y computadora.</p>
+            <summary>¿Cómo entran los alumnos?</summary>
+            <p>Con su DNI. No necesitan crear usuario ni recordar contraseñas.</p>
           </details>
           <details>
-            <summary>¿Necesito internet para usarla?</summary>
-            <p>Solo la primera vez que la abrís. Después de instalarla funciona sin conexión, incluso en un gimnasio sin señal.</p>
+            <summary>¿Funciona en iPhone y Android?</summary>
+            <p>Sí. Funciona en cualquier celular y también en la computadora.</p>
           </details>
           <details>
-            <summary>¿Dónde se guardan mis datos?</summary>
-            <p>En tu propio celular. Nadie más los ve. Desde la app podés hacer un respaldo y exportar tu historial cuando quieras.</p>
+            <summary>¿Puedo probarla antes de contratar?</summary>
+            <p>Sí. Tocá "Probar demo" y entrá con el DNI de ejemplo que aparece en la pantalla.</p>
           </details>
           <details>
             <summary>¿Cómo pago?</summary>
-            <p>Me escribís por WhatsApp y coordinamos el medio de pago que te quede más cómodo.</p>
-          </details>
-          <details>
-            <summary>¿Puedo probarla antes de pagar?</summary>
-            <p>Sí. Tocá "Probar gratis" y usala todo lo que quieras antes de decidir.</p>
+            <p>Es una cuota fija por mes. Me escribís por WhatsApp y coordinamos el medio de pago.</p>
           </details>
         </div>
       </div>
@@ -434,11 +380,11 @@
       <canvas class="fx-canvas" data-fx="lightfall" aria-hidden="true"></canvas>
       <div class="wrap" data-reveal>
         <p class="eyebrow">Gym App</p>
-        <h2 class="gx-closing-title">Tu próximo récord <span class="shiny">empieza hoy.</span></h2>
-        <p class="lead">Probala gratis ahora. Si te sirve, la seguimos juntos.</p>
+        <h2 class="gx-closing-title">Tu gimnasio, <span class="shiny">en orden.</span></h2>
+        <p class="lead">Probá la demo ahora. Si te sirve, la ponemos en marcha con tu marca.</p>
         <div class="hero-cta">
-          <a class="btn btn-primary btn-glow" data-magnet href="https://beckerlastrelaureano.github.io/gymtracker/" target="_blank" rel="noopener">Probar gratis</a>
-          <a class="btn" data-magnet data-wa="Hola Becker, tengo una consulta sobre Gym App.">Consultar</a>
+          <a class="btn btn-primary btn-glow" data-magnet data-demo href="https://gymapp-demo.vercel.app/" target="_blank" rel="noopener">Probar demo</a>
+          <a class="btn" data-magnet data-wa="Hola Becker, quiero info de Gym App para mi gimnasio.">Pedir info</a>
         </div>
       </div>
     </section>
@@ -490,15 +436,17 @@
   <a class="wa-float" data-wa="Hola Becker, quiero información sobre Gym App." aria-label="Escribime por WhatsApp">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.6.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>
   </a>
+
   <!-- Librerías desde el CDN: GSAP (animaciones de scroll) y Lenis (scroll suave) -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
 
-  <script src="js/config.js?v=4"></script>
-  <script src="js/main.js?v=4"></script>
+  <script src="js/config.js?v=5"></script>
+  <script src="js/main.js?v=5"></script>
   <script src="js/fx.js?v=4"></script>
-  <script src="js/gym-app.js?v=4"></script>
+  <script src="js/gym-app.js?v=6"></script>
   <script src="js/core/scroll.js?v=5"></script>
-  <script src="js/core/motion.js?v=10"></script></body>
+  <script src="js/core/motion.js?v=11"></script>
+</body>
 </html>
