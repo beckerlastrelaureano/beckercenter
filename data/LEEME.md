@@ -42,6 +42,17 @@ Los libros están en `books.json`. Cada libro es un bloque entre llaves `{ }`, s
 
 Si después de editar el catálogo no aparece, pegá el contenido en https://jsonlint.com para encontrar el error.
 
+## Combos en oferta
+
+Arriba de los libros, en `combos`. Cada combo junta 3 libros a un precio:
+
+```json
+{ "id": "o1", "nombre": "Joe Dispenza", "nota": "Mismo autor", "precio": 50000, "libros": ["b53", "b54", "b55"] }
+```
+
+- `libros` son los `id` de los libros del combo.
+- Para sacar un combo, borrá su bloque. Si la lista queda vacía (`"combos": []`), la sección no se muestra.
+
 ## Nueva categoría
 
 Agregala a la lista `categorias` (arriba del archivo) y usá el mismo nombre en los libros.

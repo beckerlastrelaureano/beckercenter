@@ -1952,3 +1952,41 @@ html.telon-out body::after { animation: telon-entra .45s cubic-bezier(.7, 0, .2,
   html { scroll-behavior: auto; }
   [data-reveal] { opacity: 1; transform: none; }
 }
+
+/* Combos en oferta (Books): 3 tapas en abanico + lista de títulos */
+.combos { margin: 6px 0 34px; }
+.combos-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--teal-hi);
+}
+.combos-sub { margin: 6px 0 16px; color: var(--muted); font-size: 14.5px; }
+.combo-grid { display: grid; gap: 14px; }
+@media (min-width: 760px) { .combo-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
+@media (min-width: 1100px) { .combo-grid { grid-template-columns: repeat(3, 1fr); } }
+.combo { display: grid; grid-template-columns: 124px 1fr; gap: 16px; padding: 14px; }
+.combo-tapas { position: relative; height: 150px; align-self: start; }
+.combo-tapas > * {
+  position: absolute; top: 0;
+  width: 72px; aspect-ratio: 2 / 3; height: auto;
+  border-radius: 7px;
+  object-fit: cover;
+  box-shadow: 0 10px 20px -10px rgba(0,0,0,.7);
+}
+.combo-tapas > :nth-child(1) { left: 0; transform: rotate(-7deg); }
+.combo-tapas > :nth-child(2) { left: 26px; top: 10px; z-index: 1; }
+.combo-tapas > :nth-child(3) { left: 52px; top: 20px; z-index: 2; transform: rotate(6deg); }
+.combo-tapas .cover-fallback { font-size: 9px; }
+.combo-body { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.combo h3 { margin: 8px 0 6px; font-family: var(--font-display); font-size: 15.5px; font-weight: 600; line-height: 1.3; }
+.combo ul { margin: 0; padding: 0; list-style: none; width: 100%; }
+.combo li { font-size: 14px; line-height: 1.45; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; }
+.combo li small { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.combo .book-foot { width: 100%; flex-wrap: wrap; }
+.combo-precio { display: flex; flex-direction: column; line-height: 1.2; }
+.combo-precio s { color: var(--muted); font-size: 13px; }
+.combo-precio em { font-style: normal; color: var(--teal-hi); font-size: 12.5px; }

@@ -2,6 +2,7 @@
    BOOKS.JS — catálogo de Becker Books
    Lee los libros de data/books.json y arma:
    - las tarjetas
+   - los combos en oferta (3 libros a un precio)
    - la búsqueda y los filtros por categoría
    - el pedido que se envía por WhatsApp
    Para cambiar libros o precios NO edites este archivo:
@@ -20,9 +21,11 @@
   const countEl = $('[data-count]');
   const emptyEl = $('[data-empty]');
   const moreBtn = $('[data-more]');
+  const combosBox = $('[data-combos]');
 
   let libros = [];
   let categorias = [];
+  let combos = [];
   const state = { q: '', cat: 'Todos', stock: false, visibles: POR_PAGINA };
 
   /* ---------- Ayudas ---------- */
@@ -47,19 +50,29 @@
       });
     }
     // Actualiza solo la tarjeta tocada, sin redibujar todo
-    const card = grid.querySelector(`[data-id="${id}"] .book-buy`);
+    const card = document.querySelector(`[data-id="${id}"] .book-buy`);
     if (card) card.innerHTML = botonCompra(id);
   }
 
+  // Un combo se guarda en el pedido como un "libro" más, con sus títulos como autor
+  const librosDe = c => c.libros.map(id => libros.find(l => l.id === id)).filter(Boolean);
+  function itemPedido(id) {
+    const libro = libros.find(l => l.id === id);
+    if (libro) return { ...libro, cuantos: 1 };
+    const c = combos.find(x => x.id === id);
+    if (!c) return null;
+    const ls = librosDe(c);
+    return { id, titulo: 'Combo ' + c.nombre, autor: ls.map(l => l.titulo).join(', '), precio: c.precio, cuantos: ls.length };
+  }
   function lineasPedido() {
     return Object.entries(pedido)
-      .map(([id, q]) => ({ libro: libros.find(l => l.id === id), q }))
+      .map(([id, q]) => ({ libro: itemPedido(id), q }))
       .filter(l => l.libro);
   }
 
   function actualizarPedido() {
     const lineas = lineasPedido();
-    const cantidad = lineas.reduce((s, l) => s + l.q, 0);
+    const cantidad = lineas.reduce((s, l) => s + l.q * l.libro.cuantos, 0);
     const total = lineas.reduce((s, l) => s + l.q * l.libro.precio, 0);
 
     document.querySelectorAll('[data-cart-count]').forEach(el => { el.textContent = cantidad; el.hidden = !cantidad; });
@@ -160,6 +173,38 @@
       </article>`;
   }
 
+  /* ---------- Combos en oferta ---------- */
+  function dibujarCombos() {
+    const lista = combos.filter(c => librosDe(c).length);
+    const visible = lista.length && state.cat === 'Todos' && !state.q && !state.stock;
+    combosBox.hidden = !visible;
+    if (!visible || combosBox.dataset.listo) return;
+    combosBox.dataset.listo = '1';
+    combosBox.querySelector('[data-combos-list]').innerHTML = lista.map(c => {
+      const ls = librosDe(c);
+      const suelto = ls.reduce((s, l) => s + l.precio, 0);
+      const tapas = ls.map(l => l.portada
+        ? `<img src="${esc(l.portada)}" alt="" loading="lazy" decoding="async" width="300" height="450">`
+        : `<div class="cover-fallback"><span>${esc(l.titulo)}</span></div>`).join('');
+      return `
+        <article class="card combo" data-id="${c.id}">
+          <div class="combo-tapas" aria-hidden="true">${tapas}</div>
+          <div class="combo-body">
+            <span class="badge is-stock">${esc(c.nota || 'Oferta')}</span>
+            <h3>Combo ${esc(c.nombre)}</h3>
+            <ul>${ls.map(l => `<li>${esc(l.titulo)} <small>${precio(l.precio)}</small></li>`).join('')}</ul>
+            <div class="book-foot">
+              <div class="combo-precio">
+                <b class="price">${precio(c.precio)}</b>
+                ${suelto > c.precio ? `<s>${precio(suelto)}</s><em>Ahorrás ${precio(suelto - c.precio)}</em>` : ''}
+              </div>
+              <div class="book-buy">${botonCompra(c.id)}</div>
+            </div>
+          </div>
+        </article>`;
+    }).join('');
+  }
+
   /* ---------- Filtros ---------- */
   function filtrados() {
     const q = normal(state.q);
@@ -181,6 +226,7 @@
   }
 
   function dibujar() {
+    dibujarCombos();
     const lista = filtrados();
     grid.innerHTML = lista.slice(0, state.visibles).map(tarjeta).join('');
     if (window.FX) window.FX.activar(grid);   // inclinación 3D (js/fx.js)
@@ -214,6 +260,7 @@
     .then(r => r.json())
     .then(data => {
       categorias = data.categorias || [];
+      combos = data.combos || [];
       // Orden: destacados primero, después los que están en stock
       libros = (data.libros || [])
         .map((l, i) => ({ ...l, _i: i }))

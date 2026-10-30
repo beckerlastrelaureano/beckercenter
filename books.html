@@ -40,7 +40,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Montserrat:wght@300;400;500;600;700&display=swap">
-  <link rel="stylesheet" href="css/styles.css?v=17">
+  <link rel="stylesheet" href="css/styles.css?v=18">
   <!-- El catálogo se carga desde data/books.json; se adelanta la descarga -->
   <link rel="preload" href="data/books.json" as="fetch" crossorigin>
 </head>
@@ -140,6 +140,13 @@
           </div>
         </div>
 
+        <!-- Combos en oferta: 3 libros a un precio (salen de "combos" en data/books.json) -->
+        <section class="combos" data-combos hidden aria-labelledby="combos-title">
+          <h2 class="combos-title" id="combos-title">Combos en oferta</h2>
+          <p class="combos-sub">3 libros juntos a un precio especial. También podés comprarlos por separado.</p>
+          <div class="combo-grid" data-combos-list></div>
+        </section>
+
         <!-- Acá se dibujan las tarjetas de los libros (las crea js/books.js) -->
         <div class="book-grid" data-grid></div>
 
@@ -235,7 +242,7 @@
   <script src="js/config.js?v=5"></script>
   <script src="js/main.js?v=5"></script>
   <script src="js/fx.js?v=4"></script>
-  <script src="js/books.js?v=5"></script>
+  <script src="js/books.js?v=6"></script>
   <script src="js/core/scroll.js?v=5"></script>
   <script src="js/core/motion.js?v=11"></script></body>
 </html>
