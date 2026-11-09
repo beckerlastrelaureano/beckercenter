@@ -8,7 +8,11 @@
       "destacada": true,
       "tipo": "Sistema de gestión",
       "resumen": "Tu gimnasio organizado en una app: rutinas asignadas, alumnos con su ficha, cuotas al día y asistencia.",
-      "paraQuien": ["Gimnasios", "Personal trainers", "Alumnos"],
+      "paraQuien": [
+        "Gimnasios",
+        "Personal trainers",
+        "Alumnos"
+      ],
       "funciones": [
         "Carga y asignación de rutinas",
         "Ficha de cada alumno",
@@ -24,7 +28,41 @@
       ],
       "probar": "https://gymapp-demo.vercel.app/",
       "pagina": "gym-app.html",
-      "mensaje": "Hola Becker, quiero información sobre Gym App."
+      "mensaje": "Hola Becker, quiero información sobre Gym App.",
+      "video": "img/video/gym-app.mp4",
+      "poster": "img/video/gym-app.jpg"
+    },
+    {
+      "id": "perchero",
+      "nombre": "Perchero",
+      "subtitulo": "Sistema para tiendas de ropa",
+      "estado": "disponible",
+      "destacada": true,
+      "tipo": "Sistema de ventas y stock",
+      "resumen": "Escaneás la etiqueta y ves precio, talle y stock al toque. Cobrás como quiera tu clienta, el ticket sale solo y el stock se descuenta en el local y en la web.",
+      "paraQuien": [
+        "Tiendas de ropa",
+        "Showrooms",
+        "Vendedoras"
+      ],
+      "funciones": [
+        "Consultar precio escaneando la etiqueta",
+        "Precio por medio de pago: efectivo, transferencia, cuotas",
+        "Stock por talle y color",
+        "Local y tienda online con el mismo stock",
+        "Ventas del día y prendas para reponer",
+        "Etiquetas con código para imprimir"
+      ],
+      "capturas": [
+        "img/apps/perchero-inicio.jpg",
+        "img/apps/perchero-precio.jpg",
+        "img/apps/perchero-stock.jpg"
+      ],
+      "probar": "",
+      "pagina": "perchero.html",
+      "video": "img/video/perchero.mp4",
+      "poster": "img/video/perchero.jpg",
+      "mensaje": "Hola Becker, quiero información sobre Perchero para mi tienda."
     },
     {
       "id": "becker-coach",
@@ -34,7 +72,10 @@
       "destacada": false,
       "tipo": "Plataforma para entrenadores",
       "resumen": "Gestioná a tus alumnos, asigná rutinas y seguí su progreso desde un solo lugar.",
-      "paraQuien": ["Entrenadores", "Gimnasios"],
+      "paraQuien": [
+        "Entrenadores",
+        "Gimnasios"
+      ],
       "funciones": [],
       "capturas": [],
       "probar": "",

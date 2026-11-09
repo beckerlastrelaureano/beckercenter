@@ -1,6 +1,6 @@
 /* =========================================================
    HERO3D.JS — figura 3D de la portada de cada página (Three.js)
-   - Inicio: monograma "IB" · Books: libro abierto · Design: pantalla
+   - Inicio: monograma "IB" · Books: libro abierto · Design: pantalla · Line: remera
    - Metal con volumen dentro del anillo verde azulado
    - Polvo de partículas alrededor
    - Gira siguiendo el dedo, el mouse o la inclinación del celular
@@ -9,7 +9,7 @@
 
    Lo carga js/core/motion.js solo en niveles "alto" y "medio".
    En el HTML:
-   <canvas class="hero-3d" data-figura="logo|libro|pantalla">
+   <canvas class="hero-3d" data-figura="logo|libro|pantalla|remera">
    y el dibujo plano que reemplaza lleva data-slot-3d.
    No hace falta editar este archivo.
    ========================================================= */
@@ -169,8 +169,38 @@ function figuraPantalla() {
   return g;
 }
 
+// Line: remera de metal con el bordado verde azulado en el pecho
+function figuraRemera() {
+  const g = new THREE.Group();
+  const s = new THREE.Shape();
+  s.moveTo(-0.32, 0.95);
+  s.lineTo(-0.78, 0.84);                 // hombro izquierdo
+  s.lineTo(-1.25, 0.44);                 // manga
+  s.lineTo(-0.99, 0.12);
+  s.lineTo(-0.68, 0.3);                  // axila
+  s.quadraticCurveTo(-0.72, -0.3, -0.68, -0.95);   // costado, apenas entallado
+  s.lineTo(0.68, -0.95);                 // ruedo
+  s.quadraticCurveTo(0.72, -0.3, 0.68, 0.3);
+  s.lineTo(0.99, 0.12);
+  s.lineTo(1.25, 0.44);
+  s.lineTo(0.78, 0.84);
+  s.lineTo(0.32, 0.95);
+  s.quadraticCurveTo(0.28, 0.66, 0, 0.66);         // cuello redondo
+  s.quadraticCurveTo(-0.28, 0.66, -0.32, 0.95);
+  const remera = new THREE.Mesh(extruir([s], 0.16), matLogo);
+  // Bordado del pecho y costura del ruedo
+  const bordado = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.075, 0.04), matAnillo);
+  bordado.position.set(0, 0.36, 0.13);
+  const ruedo = new THREE.Mesh(new THREE.BoxGeometry(1.36, 0.025, 0.03), matAnillo);
+  ruedo.position.set(0, -0.86, 0.12);
+  g.add(remera, bordado, ruedo);
+  g.scale.setScalar(0.86);
+  g.position.y = 0.02;
+  return g;
+}
+
 const figura = canvas.dataset.figura || 'logo';
-const logo = ({ libro: figuraLibro, pantalla: figuraPantalla }[figura] || figuraLogo)();
+const logo = ({ libro: figuraLibro, pantalla: figuraPantalla, remera: figuraRemera }[figura] || figuraLogo)();
 
 // Anillo del logo, con brillo propio
 const anillo = new THREE.Mesh(new THREE.TorusGeometry(46 * S, 0.05, 24, alto ? 180 : 90), matAnillo);

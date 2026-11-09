@@ -1,7 +1,7 @@
 /* =========================================================
    DESIGN.JS — vitrina de apps de Becker Design
    Lee las apps de data/apps.json:
-   - la app con "destacada": true se muestra grande arriba
+   - las apps con "destacada": true se muestran grandes arriba
    - el resto se muestra en tarjetas
    Para sumar o cambiar apps editá data/apps.json, no este archivo.
    ========================================================= */
@@ -16,6 +16,7 @@
   const ESTADOS = { disponible: 'Disponible', proximamente: 'Próximamente', desarrollo: 'En desarrollo' };
 
   const iconoWa = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>';
+  const play = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>';
   const flecha = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
 
   /* Celular con capturas que cambian solas */
@@ -33,9 +34,11 @@
 
   function botones(app) {
     let html = '';
+    // El botón principal va primero: probar la demo o, si no hay demo, pedir info
     if (app.probar) html += `<a class="btn btn-primary btn-glow" data-magnet href="${esc(app.probar)}" target="_blank" rel="noopener">Probar gratis ${flecha}</a>`;
+    else html += `<a class="btn btn-primary" href="${wa(app.mensaje)}" target="_blank" rel="noopener">${iconoWa} ${app.estado === 'disponible' ? 'Pedir info' : 'Avisame'}</a>`;
+    if (app.video) html += `<a class="btn" data-magnet href="${esc(app.pagina || app.video)}" data-reel="${esc(app.video)}" data-reel-poster="${esc(app.poster || '')}">${play} Ver video</a>`;
     if (app.pagina) html += `<a class="btn" href="${esc(app.pagina)}">Ver más</a>`;
-    if (!app.probar) html += `<a class="btn btn-primary" href="${wa(app.mensaje)}" target="_blank" rel="noopener">${iconoWa} ${app.estado === 'disponible' ? 'Pedir info' : 'Avisame'}</a>`;
     return html;
   }
 
@@ -92,9 +95,10 @@
     .then(r => r.json())
     .then(data => {
       const apps = data.apps || [];
-      const top = apps.find(a => a.destacada);
-      const resto = apps.filter(a => a !== top);
-      if (top) destacadaBox.innerHTML = destacada(top);
+      // Todas las apps con "destacada": true van grandes arriba, una debajo de la otra
+      const top = apps.filter(a => a.destacada);
+      const resto = apps.filter(a => !a.destacada);
+      destacadaBox.innerHTML = top.map(destacada).join('');
       grid.innerHTML = resto.map(tarjeta).join('');
       window.animarCelulares();   // está en main.js
       if (window.FX) window.FX.activar();   // efectos 3D (js/fx.js)

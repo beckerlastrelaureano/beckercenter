@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!-- ===== SEO ===== -->
+  <title>Perchero | Sistema para tiendas de ropa</title>
+  <meta name="description" content="Perchero: escaneás la etiqueta y ves precio, talle y stock. Cobro, ticket y stock compartido entre el local y la web. Para tiendas de ropa.">
+  <link rel="canonical" href="https://beckerlastrelaureano.github.io/beckercenter/perchero.html">
+  <meta name="theme-color" content="#050607">
+
+  <!-- ===== Vista previa al compartir ===== -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:site_name" content="Becker Center">
+  <meta property="og:title" content="Perchero — Tu tienda de ropa vendiendo sin frenar">
+  <meta property="og:description" content="Precio, talle y stock al toque. Para tiendas de ropa y showrooms. Mirá el video.">
+  <meta property="og:url" content="https://beckerlastrelaureano.github.io/beckercenter/perchero.html">
+  <meta property="og:image" content="https://beckerlastrelaureano.github.io/beckercenter/img/video/perchero.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+
+  <!-- Detecta si el celular aguanta 3D (va primero) -->
+  <script src="js/core/rendimiento.js?v=7"></script>
+  <script>try{var t=localStorage.getItem('bc-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Montserrat:wght@300;400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="css/styles.css?v=21">
+
+  <!-- Datos para Google: qué es la app -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Perchero",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "url": "https://beckerlastrelaureano.github.io/beckercenter/perchero.html",
+    "author": { "@type": "Person", "name": "Becker" }
+  }
+  </script>
+</head>
+
+<body data-page="design" class="page-gym">
+
+  <!-- ================= ENCABEZADO ================= -->
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html" aria-label="Becker Center, inicio">
+        <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><circle class="ring" cx="50" cy="50" r="46"/><path class="ib" d="M34 30V70M42 33H55a8 8 0 0 1 0 16H44M44 49H57a9 9 0 0 1 0 18H42"/></svg>
+        <span class="wordmark">B<span class="e3"></span>CKER</span>
+      </a>
+
+      <nav class="nav-top" aria-label="Principal">
+        <a href="index.html" data-nav="inicio">Inicio</a>
+        <a href="books.html" data-nav="books">Books</a>
+        <a href="line.html" data-nav="line">Line</a>
+        <a href="design.html" data-nav="design">Design</a>
+        <a href="gym-app.html" data-nav="gymapp">Gym App</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" type="button" data-theme-toggle aria-label="Cambiar modo claro u oscuro">
+          <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- ================= HERO ================= -->
+    <section class="gx-hero">
+      <canvas class="fx-canvas fx-liquid" data-fx="liquid" aria-hidden="true"></canvas>
+      <div class="gx-grid" aria-hidden="true"></div>
+
+      <div class="wrap gx-hero-inner">
+        <div class="gx-hero-text">
+          <span class="live-chip"><i></i> Tiendas de ropa · Showrooms</span>
+
+          <!-- TEXTO EDITABLE: título principal -->
+          <h1 class="gx-title" data-split>Tu tienda de ropa <em class="shiny">vendiendo</em> sin frenar.</h1>
+
+          <p class="lead gx-lead">Escaneás la etiqueta y ves precio, talle y stock al toque. Cobrás como quiera tu clienta, el ticket sale solo y el stock se descuenta en el local y en la web.</p>
+
+          <div class="hero-cta gx-cta">
+            <a class="btn btn-primary btn-glow" data-magnet data-wa="Hola Becker, quiero ver una demo de Perchero para mi tienda.">
+              Pedir demo
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+            </a>
+            <a class="btn" data-magnet href="#video" data-reel="img/video/perchero.mp4" data-reel-poster="img/video/perchero.jpg">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>
+              Ver video
+            </a>
+          </div>
+        </div>
+
+        <div class="gx-hero-media">
+          <div class="phone tilt" data-phone data-tilt="14">
+            <div class="phone-screen">
+              <img src="img/apps/perchero-inicio.jpg" alt="Perchero: inicio con las ventas del día y lo que falta reponer" class="is-on" width="375" height="812">
+              <img src="img/apps/perchero-precio.jpg" alt="Perchero: consultar precio pasando el lector por la etiqueta" loading="lazy" width="375" height="812">
+              <img src="img/apps/perchero-stock.jpg" alt="Perchero: precio por medio de pago y stock por talle y color" loading="lazy" width="375" height="812">
+              <span class="glare" aria-hidden="true"></span>
+            </div>
+            <div class="phone-dots"><span class="is-on"></span><span></span><span></span></div>
+          </div>
+
+          <!-- Avisos de ejemplo (decorativos) -->
+          <div class="float-chip fc-1" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+            <div><b>Vendido</b><small>Jean Mom · 38</small></div>
+          </div>
+          <div class="float-chip fc-2" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>
+            <div><b>$ 640.100</b><small>Ventas de hoy</small></div>
+          </div>
+          <div class="float-chip fc-3" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3v4M5 21h14l-7-14z"/></svg>
+            <div><b>Quedan 2</b><small>Talle 40 · Celeste</small></div>
+          </div>
+        </div>
+      </div>
+
+      <span class="gx-hint" aria-hidden="true">Tocá o mové el dedo sobre el fondo</span>
+    </section>
+
+
+    <!-- ================= CINTAS GIGANTES ================= -->
+    <div class="mega-marquee" aria-hidden="true">
+      <div class="mm-row"><div class="mm-track">
+        <span>Precio</span><span class="outline">Talle</span><span>Stock</span><span class="outline">Cobro</span><span>Ticket</span>
+        <span>Precio</span><span class="outline">Talle</span><span>Stock</span><span class="outline">Cobro</span><span>Ticket</span>
+      </div></div>
+      <div class="mm-row is-reverse"><div class="mm-track">
+        <span class="outline">Tiendas de ropa</span><span>Showrooms</span><span class="outline">Local</span><span>Tienda online</span>
+        <span class="outline">Tiendas de ropa</span><span>Showrooms</span><span class="outline">Local</span><span>Tienda online</span>
+      </div></div>
+    </div>
+
+
+    <!-- ================= FUNCIONES: el celular gira y cambia de pantalla al bajar ================= -->
+    <!-- TEXTO EDITABLE: cada <article> es una función. data-pantalla = imagen que muestra el celular,
+         data-foco = qué parte de la imagen se ve (top, center o bottom) -->
+    <section class="features" id="funciones" data-features>
+      <div class="sticky-box">
+        <div class="wrap features-grid">
+          <div class="features-phone">
+            <div class="phone phone-3d" data-feature-phone>
+              <div class="phone-screen">
+                <img src="img/apps/perchero-precio.jpg" alt="" class="is-on" data-feature-img width="375" height="812">
+              </div>
+            </div>
+          </div>
+          <div class="features-text">
+            <p class="eyebrow">Funciones</p>
+            <article data-pantalla="img/apps/perchero-precio.jpg" data-foco="top">
+              <b>01</b><h3>Escaneás la etiqueta</h3>
+              <p>Pasás el lector o la cámara del celular por la etiqueta y aparece la prenda con su precio. Sin buscar en planillas.</p>
+            </article>
+            <article data-pantalla="img/apps/perchero-stock.jpg" data-foco="top">
+              <b>02</b><h3>Precio por medio de pago</h3>
+              <p>Efectivo con descuento, transferencia, débito, QR o cuotas. Tu clienta elige y el total se calcula solo.</p>
+            </article>
+            <article data-pantalla="img/apps/perchero-stock.jpg" data-foco="bottom">
+              <b>03</b><h3>Stock por talle y color</h3>
+              <p>Ves cuántas quedan de cada talle y color. Vendés en el local o por la web y el stock se descuenta solo.</p>
+            </article>
+            <article data-pantalla="img/apps/perchero-inicio.jpg" data-foco="top">
+              <b>04</b><h3>Caja y reposición</h3>
+              <p>Cuánto vendiste hoy, qué se vendió en el local y qué online, y qué prendas tenés que reponer.</p>
+            </article>
+          </div>
+        </div>
+        <div class="features-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      </div>
+    </section>
+
+
+    <!-- ================= VIDEO DE LA APP ================= -->
+    <!-- El video está en img/video/perchero.mp4 y la portada en img/video/perchero.jpg.
+         Cada paso de la lista se enciende desde el segundo que dice data-t. -->
+    <section class="section" id="video">
+      <div class="wrap video-grid">
+        <div data-reveal>
+          <p class="eyebrow">La app en acción</p>
+          <h2 class="h2" data-split>Misma cuadra. <em>Dos tiendas.</em></h2>
+          <p class="lead">Misma ropa, mismos precios. Una vende sin frenar y la otra revuelve el depósito. La diferencia es el sistema.</p>
+          <ol class="video-steps" id="pasos-perchero">
+            <li class="is-on" data-t="0">Dos tiendas, la misma ropa</li>
+            <li data-t="7.7">Escaneás la etiqueta: precio, talle y stock</li>
+            <li data-t="14.3">Elegís cómo te paga y el ticket sale solo</li>
+            <li data-t="17.3">Local y web con el mismo stock</li>
+            <li data-t="25.4">Ves cuánto vendiste y qué reponer</li>
+          </ol>
+        </div>
+        <div class="reel" data-reel-player data-pasos="#pasos-perchero" data-reveal>
+          <video src="img/video/perchero.mp4" poster="img/video/perchero.jpg" preload="metadata" playsinline width="1080" height="1920" aria-label="Video de Perchero"></video>
+          <button class="reel-play" type="button" aria-label="Reproducir el video de Perchero con sonido">
+            <i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg></i>
+            <small>Ver video · 46 s</small>
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================= CAPTURAS EN 3D (deslizá) ================= -->
+    <section class="section" style="padding-top:16px">
+      <div class="wrap">
+        <div data-reveal>
+          <p class="eyebrow">Por dentro</p>
+          <h2 class="h2" data-split>Así se ve <em>en el celular.</em></h2>
+          <p class="lead">Deslizá para ver más pantallas.</p>
+        </div>
+      </div>
+      <!-- Para sumar una captura, copiá un <figure> y cambiá la imagen y el texto -->
+      <div class="flow" data-flow data-reveal>
+        <figure><img src="img/apps/perchero-inicio.jpg" alt="Inicio con las ventas del día" loading="lazy" width="375" height="812" draggable="false"><figcaption>Ventas del día</figcaption></figure>
+        <figure><img src="img/apps/perchero-precio.jpg" alt="Consultar precio con el lector" loading="lazy" width="375" height="812" draggable="false"><figcaption>Consultar precio</figcaption></figure>
+        <figure><img src="img/apps/perchero-stock.jpg" alt="Stock por talle y color" loading="lazy" width="375" height="812" draggable="false"><figcaption>Stock por talle</figcaption></figure>
+        <figure><img src="img/apps/perchero-reponer.jpg" alt="Prendas para reponer" loading="lazy" width="375" height="812" draggable="false"><figcaption>Para reponer</figcaption></figure>
+      </div>
+      <div class="flow-dots" data-flow-dots></div>
+    </section>
+
+
+    <!-- ================= PARA QUIÉN ES ================= -->
+    <section class="section" style="padding-top:16px">
+      <div class="wrap">
+        <div data-reveal>
+          <p class="eyebrow">Para quién es</p>
+          <h2 class="h2" data-split>Una app, <em>tres formas de usarla.</em></h2>
+        </div>
+
+        <div class="audience" data-reveal>
+          <div class="tabs gx-tabs" role="tablist" aria-label="Para quién es">
+            <span class="tabs-pill" aria-hidden="true"></span>
+            <button type="button" role="tab" aria-selected="true" aria-controls="tab-duena" id="t-duena">Dueña</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="tab-vendedora" id="t-vendedora">Vendedoras</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="tab-online" id="t-online">Online</button>
+          </div>
+
+          <!-- TEXTO EDITABLE: contenido de cada pestaña -->
+          <div class="tab-panel" role="tabpanel" id="tab-duena" aria-labelledby="t-duena">
+            <h3>Tu negocio en números, desde el celular.</h3>
+            <ul class="check-list">
+              <li>Cuánto vendiste hoy, en el local y online</li>
+              <li>Qué prendas se agotaron y qué tenés que reponer</li>
+              <li>Cada vendedora con su usuario</li>
+            </ul>
+          </div>
+          <div class="tab-panel" role="tabpanel" id="tab-vendedora" aria-labelledby="t-vendedora" hidden>
+            <h3>Respondés al toque, sin ir al depósito.</h3>
+            <ul class="check-list">
+              <li>Escaneás la etiqueta y ves precio, talle y stock</li>
+              <li>Cobrás con el medio de pago que elija la clienta</li>
+              <li>Cambios y devoluciones en un par de toques</li>
+            </ul>
+          </div>
+          <div class="tab-panel" role="tabpanel" id="tab-online" aria-labelledby="t-online" hidden>
+            <h3>El local y la web con el mismo stock.</h3>
+            <ul class="check-list">
+              <li>Lo que vendés online se descuenta del local</li>
+              <li>Nunca más vendés algo que no tenés</li>
+              <li>Etiquetas con código listas para imprimir</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================= PREGUNTAS FRECUENTES ================= -->
+    <section class="section" style="padding-top:16px">
+      <div class="wrap faq-wrap">
+        <div data-reveal>
+          <p class="eyebrow">Preguntas frecuentes</p>
+          <h2 class="h2">Lo que <em>todos preguntan.</em></h2>
+        </div>
+
+        <!-- TEXTO EDITABLE: copiá un <details> para sumar una pregunta -->
+        <div class="faq" data-reveal>
+          <details>
+            <summary>¿Necesito un lector de códigos?</summary>
+            <p>No es obligatorio. Podés escanear la etiqueta con la cámara del celular. Si ya tenés lector, también funciona.</p>
+          </details>
+          <details>
+            <summary>¿Tengo que cargar todos mis productos a mano?</summary>
+            <p>No. Se pueden importar desde una planilla y la app arma las etiquetas con código para cada talle y color.</p>
+          </details>
+          <details>
+            <summary>¿Funciona con mi tienda online?</summary>
+            <p>Sí. Lo que vendés en la web se descuenta del mismo stock que el local. Consultame cuál usás y lo vemos.</p>
+          </details>
+          <details>
+            <summary>¿Funciona en el celular y en la computadora?</summary>
+            <p>Sí. Funciona en cualquier celular, tablet o computadora, sin descargar nada de una tienda.</p>
+          </details>
+          <details>
+            <summary>¿Cómo pago?</summary>
+            <p>Es una cuota fija por mes. Me escribís por WhatsApp y coordinamos el medio de pago.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================= CIERRE con lluvia de luces ================= -->
+    <section class="gx-closing">
+      <canvas class="fx-canvas" data-fx="lightfall" aria-hidden="true"></canvas>
+      <div class="wrap" data-reveal>
+        <p class="eyebrow">Perchero</p>
+        <h2 class="gx-closing-title">¿Cuál de las dos <span class="shiny">querés ser?</span></h2>
+        <p class="lead">Te muestro la app funcionando con tus prendas. Si te sirve, la ponemos en marcha con tu marca.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-glow" data-magnet data-wa="Hola Becker, quiero ver una demo de Perchero para mi tienda.">Pedir demo</a>
+          <a class="btn" data-magnet data-reel="img/video/perchero.mp4" data-reel-poster="img/video/perchero.jpg">Ver video</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ================= PIE DE PÁGINA ================= -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><circle class="ring" cx="50" cy="50" r="46"/><path class="ib" d="M34 30V70M42 33H55a8 8 0 0 1 0 16H44M44 49H57a9 9 0 0 1 0 18H42"/></svg>
+          <span class="wordmark">B<span class="e3"></span>CKER</span>
+          <p>Un propósito. Distintas formas de transformar.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Secciones</h4>
+          <ul>
+            <li><a href="books.html">Becker Books</a></li>
+            <li><a href="line.html">Becker Line</a></li>
+            <li><a href="design.html">Becker Design</a></li>
+            <li><a href="gym-app.html">Gym App</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a data-wa>WhatsApp</a></li>
+            <li><a data-ig>@beckercenter</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year></span> Becker Center</span>
+        <span>Tu cuerpo cambia. <b>Vos también.</b></span>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ================= MENÚ INFERIOR (celular) ================= -->
+  <nav class="tabbar" aria-label="Menú">
+    <a href="index.html" data-nav="inicio"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Inicio</a>
+    <a href="books.html" data-nav="books"><svg viewBox="0 0 24 24"><path d="M3 5.5C5.5 4.5 8.5 4.5 12 6.5v13c-3.5-2-6.5-2-9-1zM12 6.5c3.5-2 6.5-2 9-1v13c-2.5-1-5.5-1-9 1"/></svg>Books</a>
+    <a href="line.html" data-nav="line"><svg viewBox="0 0 24 24"><path d="M9 3l-5 3 2 4 2-1v12h8V9l2 1 2-4-5-3a3 3 0 0 1-6 0z"/></svg>Line</a>
+    <a href="design.html" data-nav="design"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Design</a>
+    <a href="gym-app.html" data-nav="gymapp"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg>Gym App</a>
+  </nav>
+
+  <a class="wa-float" data-wa="Hola Becker, quiero información sobre Perchero." aria-label="Escribime por WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.6.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>
+  </a>
+
+  <!-- Librerías desde el CDN: GSAP (animaciones de scroll) y Lenis (scroll suave) -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+
+  <script src="js/config.js?v=5"></script>
+  <script src="js/main.js?v=5"></script>
+  <script src="js/fx.js?v=4"></script>
+  <script src="js/gym-app.js?v=6"></script>
+  <script src="js/core/scroll.js?v=5"></script>
+  <script src="js/core/motion.js?v=13"></script>
+  <script src="js/core/reel.js?v=2"></script>
+</body>
+</html>

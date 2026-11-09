@@ -40,7 +40,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Montserrat:wght@300;400;500;600;700&display=swap">
-  <link rel="stylesheet" href="css/styles.css?v=18">
+  <link rel="stylesheet" href="css/styles.css?v=21">
   <!-- El catálogo se carga desde data/books.json; se adelanta la descarga -->
   <link rel="preload" href="data/books.json" as="fetch" crossorigin>
 </head>
@@ -58,6 +58,7 @@
       <nav class="nav-top" aria-label="Principal">
         <a href="index.html" data-nav="inicio">Inicio</a>
         <a href="books.html" data-nav="books">Books</a>
+        <a href="line.html" data-nav="line">Line</a>
         <a href="design.html" data-nav="design">Design</a>
         <a href="gym-app.html" data-nav="gymapp">Gym App</a>
       </nav>
@@ -203,6 +204,7 @@
           <h4>Secciones</h4>
           <ul>
             <li><a href="books.html">Becker Books</a></li>
+            <li><a href="line.html">Becker Line</a></li>
             <li><a href="design.html">Becker Design</a></li>
             <li><a href="gym-app.html">Gym App</a></li>
           </ul>
@@ -227,6 +229,7 @@
   <nav class="tabbar" aria-label="Menú">
     <a href="index.html" data-nav="inicio"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Inicio</a>
     <a href="books.html" data-nav="books"><svg viewBox="0 0 24 24"><path d="M3 5.5C5.5 4.5 8.5 4.5 12 6.5v13c-3.5-2-6.5-2-9-1zM12 6.5c3.5-2 6.5-2 9-1v13c-2.5-1-5.5-1-9 1"/></svg>Books</a>
+    <a href="line.html" data-nav="line"><svg viewBox="0 0 24 24"><path d="M9 3l-5 3 2 4 2-1v12h8V9l2 1 2-4-5-3a3 3 0 0 1-6 0z"/></svg>Line</a>
     <a href="design.html" data-nav="design"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Design</a>
     <a href="gym-app.html" data-nav="gymapp"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg>Gym App</a>
   </nav>
@@ -244,5 +247,5 @@
   <script src="js/fx.js?v=4"></script>
   <script src="js/books.js?v=6"></script>
   <script src="js/core/scroll.js?v=5"></script>
-  <script src="js/core/motion.js?v=11"></script></body>
+  <script src="js/core/motion.js?v=13"></script></body>
 </html>
